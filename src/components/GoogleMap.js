@@ -13,7 +13,7 @@ export class GoogleMap extends Component {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        style={{height: 200, margin: 40}}
+        style={{ height: 200, margin: 40, flex: 1 }}
       />
     );
   }

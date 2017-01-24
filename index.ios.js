@@ -1,21 +1,15 @@
 // 1. Import library to help create a comment.
 import React from 'react';
-import { AppRegistry, View } from 'react-native';
+import { AppRegistry } from 'react-native';
+import App from './src/App';
 
-import Header from './src/components/header';
-// import { GooglePlaces } from './src/components/GooglePlaces';
-import { GoogleMap } from './src/components/GoogleMap';
-// import Login from './src/components/Login';
 
 // 2. Create a Component
-const App = () => {
-  return (
-    <View style={{ flex: 1 }}>
-      <Header headerText={'Wanderapp'} />
-      <GoogleMap />
-    </View>
-  );
+const WanderApp = () => {
+    return (
+      <App />
+    );
 };
 
 // 3. Render component to device.
-AppRegistry.registerComponent('albums', () => App);
+AppRegistry.registerComponent('albums', () => WanderApp);

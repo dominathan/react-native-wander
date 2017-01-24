@@ -7,10 +7,6 @@ target 'albums' do
 
   # Pods for albums
 
-  target 'albumsTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
 
 end
 
