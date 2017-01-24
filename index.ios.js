@@ -11,7 +11,7 @@ import { GoogleMap } from './src/components/GoogleMap';
 const App = () => {
   return (
     <View style={{ flex: 1 }}>
-      <Header headerText={'WanderApp'} />
+      <Header headerText={'Wanderapp'} />
       <GoogleMap />
     </View>
   );
