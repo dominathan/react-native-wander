@@ -16,8 +16,8 @@ class App extends Component {
       <Router>
         <Scene key='drawer' component={SimpleDrawer} >
           <Scene key='main' tabs={false}>
-            <Scene key="googleMap" component={GoogleMap} />
-            <Scene key="googlePlaces" component={GooglePlaces} initial />
+            <Scene key="googleMap" component={GoogleMap} title="Google Map" />
+            <Scene key="googlePlaces" component={GooglePlaces} title="Google Places" initial />
             <Scene key="testScreen" component={TestScreen} title="Test Screen" />
           </Scene>
         </Scene>
@@ -25,11 +25,5 @@ class App extends Component {
     );
   }
 }
-
-const styles = {
-  move: {
-    marginTop: 200
-  }
-};
 
 export default App;
