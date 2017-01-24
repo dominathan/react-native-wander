@@ -27,9 +27,10 @@ const TabView = (props, context) => {
   const drawer = context.drawer;
   return (
     <View style={[styles.container, props.sceneStyle]}>
-      <Button onPress={() => { drawer.close(); Actions.googleMap(); }}>GoogleMap</Button>
-      <Button onPress={() => { drawer.close(); Actions.googlePlaces(); }}>GooglePlaces</Button>
-      <Button onPress={() => { drawer.close(); Actions.testScreen(); }}>TestScreen</Button>
+      <Button onPress={() => { drawer.close(); Actions.googleMap(); }}>Google Map</Button>
+      <Button onPress={() => { drawer.close(); Actions.googlePlaces(); }}>Google Places</Button>
+      <Button onPress={() => { drawer.close(); Actions.testScreen(); }}>Test Screen</Button>
+      <Button onPress={() => { drawer.close(); Actions.login(); }}>Login</Button>
     </View>
   );
 };

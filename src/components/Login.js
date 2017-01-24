@@ -10,7 +10,7 @@ const lock = new Auth0Lock({
   domain: AUTH0_DOMAIN
 });
 
-export default class Auth0 extends Component {
+export class Login extends Component {
 
   componentWillMount() {
 
@@ -40,7 +40,7 @@ export default class Auth0 extends Component {
 
 const styles = {
   signupContainer: {
-    marginTop: 50,
+    marginTop: 100,
     height: 50,
     width: null,
     flex: 1
