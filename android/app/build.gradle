@@ -87,7 +87,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.albums"
+        applicationId "com.react-native-wander"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -126,6 +126,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
     compile project(':react-native-maps')
     compile project(':react-native-lock')
     compile fileTree(dir: "libs", include: ["*.jar"])

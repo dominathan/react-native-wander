@@ -15,7 +15,7 @@ const styles = {
     fontSize: 20,
   },
   viewStyle: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#4296CC',
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,

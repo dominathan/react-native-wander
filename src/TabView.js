@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ListView, StyleSheet, Text, View } from 'react-native';
 import Button from 'react-native-button';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
+import TabViewHeader from './components/TabViewHeader';
 
 const contextTypes = {
   drawer: React.PropTypes.object,
@@ -16,21 +18,84 @@ const propTypes = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#333B42',
     alignItems: 'flex-start',
     justifyContent: 'space-around',
     borderWidth: 1,
   },
+  listViewStyle: {
+    flex: 1,
+    marginTop: 25
+  },
+  rowButton: {
+    color: '#8D8F90'
+  },
+  rowButtonContainer: {
+    alignItems: 'flex-start',
+    marginLeft: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#8D8F90',
+    paddingBottom: 10,
+    width: 250
+  },
+  rowIcon: {
+    marginLeft: 15,
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 30
+  },
+  rowItem: {
+    flexDirection: 'row',
+    marginTop: 5,
+    marginBottom: 5,
+    padding: 5
+  }
 });
 
 const TabView = (props, context) => {
+  const ds = new ListView.DataSource({
+    rowHasChanged: (r1, r2) => r1 !== r2
+  });
   const drawer = context.drawer;
+  const routes = ds.cloneWithRows([
+    { 
+      routeCallback: () => { drawer.close(); Actions.googleMap(); },
+      name: 'Google Map',
+      icon: 'home'
+    },
+    { 
+      routeCallback: () => { drawer.close(); Actions.googlePlaces(); },
+      name: 'Google Places',
+      icon: 'map'
+    },
+    { 
+      routeCallback: () => { drawer.close(); Actions.testScreen(); },
+      name: 'Test Screen',
+      icon: 'gears'
+    },
+    { 
+      routeCallback: () => { drawer.close(); Actions.login(); }, 
+      name: 'Login',
+      icon: 'facebook'
+
+    }
+  ]);
   return (
     <View style={[styles.container, props.sceneStyle]}>
-      <Button onPress={() => { drawer.close(); Actions.googleMap(); }}>Google Map</Button>
-      <Button onPress={() => { drawer.close(); Actions.googlePlaces(); }}>Google Places</Button>
-      <Button onPress={() => { drawer.close(); Actions.testScreen(); }}>Test Screen</Button>
-      <Button onPress={() => { drawer.close(); Actions.login(); }}>Login</Button>
+      <TabViewHeader name="Brandon Hare" userName="@bhare1987" profileImage="https://www.placecage.com/75/75.png" />
+      <ListView 
+        dataSource={routes}
+        renderRow={(rowData) => 
+          <View style={[styles.rowItem]}>
+            <Text style={[styles.rowIcon]}><Icon name={rowData.icon} size={24} color={'#8D8F90'} /></Text>
+            <View style={[styles.rowButtonContainer]}>
+              <Button style={[styles.rowButton]} onPress={rowData.routeCallback}>{rowData.name}</Button>
+            </View>
+          </View>
+        }
+        style={styles.listViewStyle}
+      />
     </View>
   );
 };
