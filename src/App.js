@@ -17,7 +17,7 @@ class App extends Component {
         <Scene key='drawer' component={SimpleDrawer} >
           <Scene key='main' tabs={false}>
             <Scene key="googleMap" component={GoogleMap} title="Google Map" initial />
-            <Scene key="googlePlaces" component={GooglePlaces} title="Google Places" />
+            <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
             <Scene key="login" component={Login} title="Login" />
           </Scene>
         </Scene>

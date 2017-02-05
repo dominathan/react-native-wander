@@ -11,11 +11,10 @@ export class GooglePlaces extends Component {
     return (
       <View style={styles.container}>
         <GooglePlacesAutocomplete
-          placeholder="Search"
+          placeholder='Bar, Restaurant, Place of Interest'
           minLength={2}
           onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-            console.log(data);
-            console.log(details);
+            console.log('GOOGLE DATA', data);
           }}
           query={{
            // available options: https://developers.google.com/places/web-service/autocomplete
@@ -31,6 +30,9 @@ export class GooglePlaces extends Component {
 
 const styles = {
   container: {
-    marginTop: 65
+    marginTop: 65,
+    flex: 1,
+    flexDirection: 'row',
+    position: 'relative'
   }
 };
