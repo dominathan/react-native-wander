@@ -1,4 +1,4 @@
-export const EMAIL_CHANGED = 'email_changed';
-export const LOGIN_USER_SUCCESSS = 'login_user_success';
-export const LOGIN_USER_FAIL = 'login_user_fail';
-export const LOGIN_USER_START = 'login_user_start';
+export const EMAIL_CHANGED = 'EMAIL_CHANGED';
+export const LOGIN_USER_SUCCESSS = 'LOGIN_USER_SUCCESS';
+export const LOGIN_USER_FAIL = 'LOGIN_USER_FAIL';
+export const LOGIN_USER_START = 'LOGIN_USER_START';

@@ -12,8 +12,8 @@ const lock = new Auth0Lock({
 
 export class Login extends Component {
 
-  componentWillMount() {
-
+  componentDidMount() {
+    this.showLock();
   }
 
   showLock() {
@@ -24,25 +24,17 @@ export class Login extends Component {
           console.log(err);
           return;
         }
-        console.log('COMING IN', JSON.stringify(profile));
+        console.log('COMING IN: ', JSON.stringify(profile));
+        console.log('TOKEN: ', JSON.stringify(token));
       })
     );
   }
 
   render() {
     return (
-      <TouchableOpacity style={styles.signupContainer} onPress={this.showLock}>
+      <TouchableOpacity onPress={this.showLock}>
         <Text> Log In </Text>
       </TouchableOpacity>
     );
   }
 }
-
-const styles = {
-  signupContainer: {
-    marginTop: 100,
-    height: 50,
-    width: null,
-    flex: 1
-  }
-};
