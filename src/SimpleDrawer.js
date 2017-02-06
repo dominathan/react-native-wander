@@ -6,7 +6,6 @@ import TabView from './TabView';
 class SimpleDrawer extends Component {
   static propTypes = {
     navigationState: React.PropTypes.object,
-    onNavigate: React.PropTypes.function,
   }
 
   render() {
