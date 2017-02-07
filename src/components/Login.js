@@ -7,11 +7,7 @@ import { loginUser } from '../services/apiActions';
 
 const lock = new Auth0Lock({
   clientId: AUTH0_CLIENT_ID,
-  domain: AUTH0_DOMAIN,
-  auth: {
-    responseType: 'id_token',
-    params: { scope: 'openid email' }
-  }
+  domain: AUTH0_DOMAIN
 });
 
 export class Login extends Component {
@@ -22,7 +18,10 @@ export class Login extends Component {
 
   showLock() {
     lock.show({
-      closable: true
+      closable: true,
+      authParams: {
+        scope: 'openid email'
+      }
     }, ((err, profile, token) => {
         if (err) {
           console.log(err);
