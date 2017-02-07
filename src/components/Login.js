@@ -7,7 +7,11 @@ import { loginUser } from '../services/apiActions';
 
 const lock = new Auth0Lock({
   clientId: AUTH0_CLIENT_ID,
-  domain: AUTH0_DOMAIN
+  domain: AUTH0_DOMAIN,
+  auth: {
+    responseType: 'id_token',
+    params: { scope: 'openid email' }
+  }
 });
 
 export class Login extends Component {
@@ -24,6 +28,8 @@ export class Login extends Component {
           console.log(err);
           return;
         }
+        console.log("TOKEN BACK? ", token);
+        console.log("PROFILE BACK ", profile);
         AsyncStorage.setItem('token', JSON.stringify(token), () => {
           this.handleLoginSuccess(profile);
         });
