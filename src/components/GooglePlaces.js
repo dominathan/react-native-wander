@@ -7,7 +7,7 @@ import GOOGLE_API_KEY from '../../config/google';
 const charleston = { description: 'Home', geometry: { lat: 32.7765, lng: 79.9311 } };
 
 export class GooglePlaces extends Component {
-  
+
 
   render() {
     return (
@@ -15,8 +15,9 @@ export class GooglePlaces extends Component {
         <GooglePlacesAutocomplete
           placeholder='Bar, Restaurant, Place of Interest'
           minLength={2}
-          onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+          onPress={(data, details) => { // 'details' is provided when fetchDetails = true
             console.log('GOOGLE DATA', data);
+            console.log('GOOGLE DETAILS', details);
           }}
           query={{
            // available options: https://developers.google.com/places/web-service/autocomplete

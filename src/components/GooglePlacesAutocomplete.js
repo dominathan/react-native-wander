@@ -98,7 +98,7 @@ const GooglePlacesAutocomplete = React.createClass({
       placeholderTextColor: '#A8A8A8',
       onPress: () => {},
       minLength: 0,
-      fetchDetails: false,
+      fetchDetails: true,
       autoFocus: false,
       getDefaultValue: () => '',
       timeout: 20000,
@@ -273,10 +273,13 @@ const GooglePlacesAutocomplete = React.createClass({
               const details = responseJSON.result;
               this._disableRowLoaders();
               this._onBlur();
-
               this.setState({
-                text: rowData.description,
+                text: details.name,
+                lat: details.geometry.location.lat,
+                lng: details.geometry.location.lng,
+                place: details
               });
+              this.selectChosenOption(details)
 
               delete rowData.isLoading;
               this.props.onPress(rowData, details);
@@ -303,10 +306,9 @@ const GooglePlacesAutocomplete = React.createClass({
 
 
       this.setState({
-        text: rowData.description,
+        text: rowData.description
       });
       this.triggerBlur(); // hide keyboard but not the results
-
       delete rowData.isLoading;
 
       this.getCurrentLocation();
@@ -426,8 +428,6 @@ const GooglePlacesAutocomplete = React.createClass({
   },
 
 
-
-
   _request(text) {
     this._abortRequests();
     if (text.length >= this.props.minLength) {
@@ -483,13 +483,10 @@ const GooglePlacesAutocomplete = React.createClass({
   },
 
   selectChosenOption(place) {
-    this.setState({
-      chosenOption: place
-    });
     const parsedPlace = {
-      name: place.description.slice(0, 254),
-      lat: null,
-      lng: null,
+      name: place.name,
+      lat: place.geometry.location.lat,
+      lng: place.geometry.location.lng,
       google_id: place.id,
       google_place_id: place.place_id
     };
@@ -516,7 +513,7 @@ const GooglePlacesAutocomplete = React.createClass({
     return (
       <Text style={[{flex: 1}, defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
         numberOfLines={1}
-        onPress={() => this.selectChosenOption(rowData)}
+        onPress={() => { this._onPress(rowData) }}
       >
         {this._renderDescription(rowData)}
       </Text>
