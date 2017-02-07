@@ -1,9 +1,9 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, AsyncStorage } from 'react-native';
 import Auth0Lock from 'react-native-lock';
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from '../../config/auth0';
-import { API_BASE } from '../../config/apiBase';
+import { loginUser } from '../services/apiActions';
 
 const lock = new Auth0Lock({
   clientId: AUTH0_CLIENT_ID,
@@ -24,25 +24,17 @@ export class Login extends Component {
           console.log(err);
           return;
         }
-        this.handleLoginSuccess(profile, token);
+        AsyncStorage.setItem('token', JSON.stringify(token), () => {
+          this.handleLoginSuccess(profile);
+        });
       })
     );
   }
 
-  handleLoginSuccess(profile, token) {
+  handleLoginSuccess(profile) {
     //send profile to API and verify token
-    fetch(`${API_BASE}/users`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Origin': '',
-        'Authorization': `Bearer ${token.idToken}`
-      },
-      body: JSON.stringify({
-        user: this.parseProfile(profile)
-      })
-    })
+    loginUser({ user: this.parseProfile(profile) })
+    .then((res) => AsyncStorage.setItem('user', JSON.stringify(res)))
     .catch((err) => {
       console.log('FUCK BALLS', err);
     });

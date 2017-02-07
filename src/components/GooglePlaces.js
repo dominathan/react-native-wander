@@ -1,12 +1,14 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocomplete } from './GooglePlacesAutocomplete';
 import GOOGLE_API_KEY from '../../config/google';
 
 const charleston = { description: 'Home', geometry: { lat: 32.7765, lng: 79.9311 } };
 
 export class GooglePlaces extends Component {
+  
+
   render() {
     return (
       <View style={styles.container}>
