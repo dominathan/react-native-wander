@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
 import { TextInput, View, ListView, ScrollView, Image, Text, Dimensions, TouchableHighlight,
-  TouchableWithoutFeedback, Platform, ActivityIndicator, PixelRatio } from 'react-native';
+  TouchableWithoutFeedback, Platform, ActivityIndicator, PixelRatio, AsyncStorage } from 'react-native';
 import Qs from 'qs';
-import { API_BASE } from '../../config/apiBase';
-
+import { addPlaceToFavorite } from '../services/apiActions';
 
 const WINDOW = Dimensions.get('window');
 
@@ -484,26 +483,29 @@ const GooglePlacesAutocomplete = React.createClass({
   },
 
   selectChosenOption(place) {
-    console.log('I WAS CHOSEN', place);
     this.setState({
       chosenOption: place
     });
-
+    const parsedPlace = {
+      name: place.description.slice(0, 254),
+      lat: null,
+      lng: null,
+      google_id: place.id,
+      google_place_id: place.place_id
+    };
+    this.saveChosenPlaceAsFavorite(parsedPlace);
   },
 
   saveChosenPlaceAsFavorite(place) {
-    fetch(`${API_Base}/api/v1/places`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Origin': '',
-        'Authorization': `Bearer ${token.idToken}`
-      },
-      body: JSON.stringify({
-        place: place
-      })
-    });
+    AsyncStorage.getItem('user', (err, user) => {
+      if (err) {
+        console.log('NO USER FROM STORAGE: ', err);
+        return err;
+      }
+      addPlaceToFavorite({ place: place, user: JSON.parse(user) })
+        .then((res) => console.log('SAVED PLACE', res))
+        .catch((error) => console.log('Failed Saving Place: ', error))
+    })
   },
 
   _renderRowData(rowData) {
