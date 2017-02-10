@@ -20,7 +20,7 @@ export class Login extends Component {
     lock.show({
       closable: true,
       authParams: {
-        scope: 'openid email'
+        scope: 'openid email profile'
       }
     }, ((err, profile, token) => {
         if (err) {

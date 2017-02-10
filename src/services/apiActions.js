@@ -52,6 +52,6 @@ const defaultGet = (subUrl) => {
 
 const addPlaceToFavorite = (place) => defaultPost('places', place);
 const loginUser = (userProfile) => defaultPost('users', userProfile);
-const getUserPlaces = () => defaultGet('places')
+const getUserPlaces = () => defaultGet('places');
 
 export { addPlaceToFavorite, loginUser, getUserPlaces };
