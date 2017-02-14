@@ -89,7 +89,8 @@ const GooglePlacesAutocomplete = React.createClass({
     predefinedPlacesAlwaysVisible: React.PropTypes.bool,
     enableEmptySections: React.PropTypes.bool,
     renderDescription: React.PropTypes.func,
-    renderRow: React.PropTypes.func
+    renderRow: React.PropTypes.func,
+    handleAddPlace: React.PropTypes.func
   },
 
   getDefaultProps() {
@@ -279,7 +280,7 @@ const GooglePlacesAutocomplete = React.createClass({
                 lng: details.geometry.location.lng,
                 place: details
               });
-              this.selectChosenOption(details)
+              this.props.handleAddPlace(details)
 
               delete rowData.isLoading;
               this.props.onPress(rowData, details);
@@ -501,6 +502,7 @@ const GooglePlacesAutocomplete = React.createClass({
       }
       addPlaceToFavorite({ place: place, user: JSON.parse(user) })
         .then((res) => console.log('SAVED PLACE', res))
+        .then((res) => this.props.handleAddPlace())
         .catch((error) => console.log('Failed Saving Place: ', error))
     })
   },

@@ -4,15 +4,17 @@ import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import MapView from 'react-native-maps';
 
-import { getUserPlaces } from '../services/apiActions';
+import { getUserPlaces, getFeed } from '../services/apiActions';
 import Button from './Button';
+import { Feed } from './Feed';
 
 export class GoogleMap extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      markers: []
+      markers: [],
+      feed: []
     };
     this.navigateToAddPlace = this.navigateToAddPlace.bind(this);
     this.loadMarkers = this.loadMarkers.bind(this);
@@ -27,6 +29,14 @@ export class GoogleMap extends Component {
       })
       .then(this.loadMarkers)
       .catch((err) => console.log('fuck balls: ', err));
+
+    getFeed()
+      .then((data) => {
+        this.setState({
+          feed: data
+        });
+      })
+      .catch((err) => console.error('NOO FEED', err));
   }
 
   navigateToAddPlace() {
@@ -66,6 +76,7 @@ export class GoogleMap extends Component {
             Add Place
           </Button>
         </View>
+        <Feed feed={this.state.feed}/>
       </View>
     );
   }

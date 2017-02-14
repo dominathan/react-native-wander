@@ -1,18 +1,43 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { GooglePlacesAutocomplete } from './GooglePlacesAutocomplete';
+
 import GOOGLE_API_KEY from '../../config/google';
+import { GooglePlacesAutocomplete } from './GooglePlacesAutocomplete';
+import { CommentBox } from './CommentBox';
 
 const charleston = { description: 'Home', geometry: { lat: 32.7765, lng: 79.9311 } };
 
 export class GooglePlaces extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showCommentAndPhotoBox: false,
+      place: {}
+    };
+    this.handleAddPlace = this.handleAddPlace.bind(this);
+    // this.navigateToAddPlace = this.navigateToAddPlace.bind(this);
+    // this.loadMarkers = this.loadMarkers.bind(this);
+  }
+
+  handleAddPlace(place) {
+    console.log("HANDLING PLACE", place);
+    this.setState({
+      place: place,
+      showCommentAndPhotoBox: true,
+    });
+  }
+
+  handle
 
 
   render() {
+    const showCommentAndPhotoBox = this.state.showCommentAndPhotoBox;
+    const place = this.state.place;
+
     return (
       <View style={styles.container}>
-        <GooglePlacesAutocomplete
+        {!showCommentAndPhotoBox && <GooglePlacesAutocomplete
           placeholder='Bar, Restaurant, Place of Interest'
           minLength={2}
           onPress={(data, details) => { // 'details' is provided when fetchDetails = true
@@ -25,7 +50,9 @@ export class GooglePlaces extends Component {
             language: 'en' // language of the results
           }}
           predefinedPlaces={[charleston]}
-        />
+          handleAddPlace={this.handleAddPlace}
+        />}
+        { showCommentAndPhotoBox && <CommentBox place={place} /> }
       </View>
     );
   }
@@ -35,7 +62,7 @@ const styles = {
   container: {
     marginTop: 65,
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     position: 'relative'
   }
 };
