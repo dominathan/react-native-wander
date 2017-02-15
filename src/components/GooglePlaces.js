@@ -16,20 +16,14 @@ export class GooglePlaces extends Component {
       place: {}
     };
     this.handleAddPlace = this.handleAddPlace.bind(this);
-    // this.navigateToAddPlace = this.navigateToAddPlace.bind(this);
-    // this.loadMarkers = this.loadMarkers.bind(this);
   }
 
   handleAddPlace(place) {
-    console.log("HANDLING PLACE", place);
     this.setState({
       place: place,
       showCommentAndPhotoBox: true,
     });
   }
-
-  handle
-
 
   render() {
     const showCommentAndPhotoBox = this.state.showCommentAndPhotoBox;
@@ -62,7 +56,5 @@ const styles = {
   container: {
     marginTop: 65,
     flex: 1,
-    flexDirection: 'column',
-    position: 'relative'
   }
 };

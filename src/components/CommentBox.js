@@ -15,7 +15,6 @@ export class CommentBox extends Component {
   }
 
   _savePlace(place) {
-    console.log(place)
     const parsedPlace = {
       name: place.name,
       lat: place.geometry.location.lat,
@@ -31,18 +30,15 @@ export class CommentBox extends Component {
     const comment = this.state.text;
     AsyncStorage.getItem('user', (err, user) => {
       if (err) {
-        console.log('NO USER FROM STORAGE: ', err);
         return err;
       }
-      addPlaceToFavorite({ place: place, user: JSON.parse(user), comment: comment  })
+      addPlaceToFavorite({ place: place, user: JSON.parse(user), comment: comment })
         .then((res) => console.log('SAVED PLACE', res))
-        .catch((error) => console.log('Failed Saving Place: ', error))
-    })
+        .catch((error) => console.log('Failed Saving Place: ', error));
+    });
   }
 
   render() {
-    const text = this.state.text;
-
     return (
       <View style={styles.viewStyle}>
         <Text>{this.props.place.name}</Text>
@@ -56,9 +52,7 @@ export class CommentBox extends Component {
             this.setState({text});
           }}
           value={this.state.text}
-          autoFocus={true}
         />
-        <Text>{text}</Text>
         <View style={styles.buttonStyle}>
           <Button onPress={() => this._savePlace(this.props.place)}>Post</Button>
         </View>
@@ -71,13 +65,16 @@ const styles = {
   textStyle: {
     fontSize: 20,
     color: 'black',
-    margin: 20
+    margin: 20,
+    borderWidth: 2,
+    borderColor: 'black',
+    height: 35
   },
   viewStyle: {
+    flex: 1,
     height: 50,
     marginTop: 30,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   buttonStyle: {
     padding: 5,

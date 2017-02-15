@@ -59,23 +59,28 @@ const TabView = (props, context) => {
   });
   const drawer = context.drawer;
   const routes = ds.cloneWithRows([
-    { 
+    {
       routeCallback: () => { drawer.close(); Actions.googleMap(); },
-      name: 'Google Map',
+      name: 'Home',
       icon: 'home'
     },
-    { 
+    {
+      routeCallback: () => { drawer.close(); Actions.friends(); },
+      name: 'Friends',
+      icon: 'gears'
+    },
+    {
       routeCallback: () => { drawer.close(); Actions.googlePlaces(); },
-      name: 'Google Places',
+      name: 'My Places',
       icon: 'map'
     },
-    { 
+    {
       routeCallback: () => { drawer.close(); Actions.testScreen(); },
       name: 'Test Screen',
       icon: 'gears'
     },
-    { 
-      routeCallback: () => { drawer.close(); Actions.login(); }, 
+    {
+      routeCallback: () => { drawer.close(); Actions.login(); },
       name: 'Login',
       icon: 'facebook'
 
@@ -83,10 +88,10 @@ const TabView = (props, context) => {
   ]);
   return (
     <View style={[styles.container, props.sceneStyle]}>
-      <TabViewHeader name="Brandon Hare" userName="@bhare1987" profileImage="https://www.placecage.com/75/75.png" />
-      <ListView 
+      <TabViewHeader name="Brandon Hare" userName="@dominathan" profileImage="https://www.placecage.com/75/75.png" />
+      <ListView
         dataSource={routes}
-        renderRow={(rowData) => 
+        renderRow={(rowData) =>
           <View style={[styles.rowItem]}>
             <Text style={[styles.rowIcon]}><Icon name={rowData.icon} size={24} color={'#8D8F90'} /></Text>
             <View style={[styles.rowButtonContainer]}>

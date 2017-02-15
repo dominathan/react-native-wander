@@ -26,9 +26,14 @@ export class Feed extends Component {
     return (
       <View style={styles.container}>
         <Image source={{ uri: feed.user.photo_url }} style={styles.photo} />
-        <Text style={styles.text}>
-          {`${feed.comment} for ${feed.place.name}`}
-        </Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>
+            {`${feed.user.first_name} added ${feed.place.name}`}
+          </Text>
+          <Text style={styles.text}>
+            {`${feed.comment}`}
+          </Text>
+        </View>
       </View>
     );
   }
@@ -53,12 +58,15 @@ const styles = {
     flexDirection: 'row',
   },
   text: {
-    marginLeft: 4,
+    marginLeft: 8,
     fontSize: 16,
   },
   photo: {
     height: 40,
     width: 40,
     borderRadius: 20,
+  },
+  textContainer: {
+    flexDirection: 'column'
   }
 };

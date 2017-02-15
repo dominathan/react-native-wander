@@ -497,11 +497,9 @@ const GooglePlacesAutocomplete = React.createClass({
   saveChosenPlaceAsFavorite(place) {
     AsyncStorage.getItem('user', (err, user) => {
       if (err) {
-        console.log('NO USER FROM STORAGE: ', err);
         return err;
       }
       addPlaceToFavorite({ place: place, user: JSON.parse(user) })
-        .then((res) => console.log('SAVED PLACE', res))
         .then((res) => this.props.handleAddPlace())
         .catch((error) => console.log('Failed Saving Place: ', error))
     })
