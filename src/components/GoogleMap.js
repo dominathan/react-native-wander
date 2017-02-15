@@ -14,7 +14,8 @@ export class GoogleMap extends Component {
     super(props);
     this.state = {
       markers: [],
-      feed: []
+      feed: null,
+      feedReady: false
     };
     this.navigateToAddPlace = this.navigateToAddPlace.bind(this);
     this.loadMarkers = this.loadMarkers.bind(this);
@@ -33,7 +34,8 @@ export class GoogleMap extends Component {
     getFeed()
       .then((data) => {
         this.setState({
-          feed: data
+          feed: data,
+          feedReady: true
         });
       })
       .catch((err) => console.error('NOO FEED', err));
@@ -57,6 +59,8 @@ export class GoogleMap extends Component {
   }
 
   render() {
+    const feedReady = this.state.feedReady;
+
     const startingPoints = this.state.markers ? this.loadMarkers() : null;
     return (
       <View style={{ justifyContent: 'space-between' }}>
@@ -76,7 +80,7 @@ export class GoogleMap extends Component {
             Add Place
           </Button>
         </View>
-        <Feed feed={this.state.feed}/>
+        {feedReady && <Feed feed={this.state.feed} />}
       </View>
     );
   }
@@ -85,11 +89,11 @@ export class GoogleMap extends Component {
 const styles = {
   containerStyle: {
     borderBottomWidth: 1,
-    padding: 5,
+    // padding: 5,
     backgroundColor: '#fff',
-    justifyContent: 'flex-start',
+    // justifyContent: 'flex-start',
     flexDirection: 'row',
     borderColor: '#ddd',
-    position: 'relative'
+    // position: 'relative'
   }
 };
