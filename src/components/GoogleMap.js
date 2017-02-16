@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import MapView from 'react-native-maps';
 
-import { getUserPlaces, getFeed } from '../services/apiActions';
+import { getUserPlaces, getFeed, getFriendFeed, getExpertFeed } from '../services/apiActions';
 import Button from './Button';
 import { Feed } from './Feed';
 
@@ -19,6 +19,9 @@ export class GoogleMap extends Component {
     };
     this.navigateToAddPlace = this.navigateToAddPlace.bind(this);
     this.loadMarkers = this.loadMarkers.bind(this);
+    this.filterFriends = this.filterFriends.bind(this);
+    this.filterExperts = this.filterExperts.bind(this);
+    this.globalFilter = this.globalFilter.bind(this);
   }
 
   componentDidMount() {
@@ -31,10 +34,15 @@ export class GoogleMap extends Component {
       .then(this.loadMarkers)
       .catch((err) => console.log('fuck balls: ', err));
 
+    this.globalFilter();
+  }
+
+  globalFilter() {
+    this.setState({ feedReady: false });
     getFeed()
       .then((data) => {
         this.setState({
-          feed: data,
+          feed: data || [],
           feedReady: true
         });
       })
@@ -58,6 +66,30 @@ export class GoogleMap extends Component {
     }).map((marker) => <MapView.Marker key={marker.key} coordinate={marker.coordinate} title={marker.title} />);
   }
 
+  filterFriends() {
+    this.setState({ feedReady: false });
+    getFriendFeed()
+      .then((data) => {
+        this.setState({
+          feed: data || [],
+          feedReady: true
+        });
+      })
+      .catch((err) => console.error('NOO FEED', err));
+  }
+
+  filterExperts() {
+    this.setState({ feedReady: false });
+    getExpertFeed()
+      .then((data) => {
+        this.setState({
+          feed: data || [],
+          feedReady: true
+        });
+      })
+      .catch((err) => console.error('NOO FEED', err));
+  }
+
   render() {
     const feedReady = this.state.feedReady;
 
@@ -79,6 +111,15 @@ export class GoogleMap extends Component {
           <Button onPress={this.navigateToAddPlace}>
             Add Place
           </Button>
+          <Button onPress={this.filterFriends}>
+            Friend Filter
+          </Button>
+          <Button onPress={this.filterExperts}>
+            Expert Filter
+          </Button>
+          <Button onPress={this.globalFilter}>
+            Global Filter
+          </Button>
         </View>
         {feedReady && <Feed feed={this.state.feed} />}
       </View>
@@ -89,11 +130,8 @@ export class GoogleMap extends Component {
 const styles = {
   containerStyle: {
     borderBottomWidth: 1,
-    // padding: 5,
     backgroundColor: '#fff',
-    // justifyContent: 'flex-start',
     flexDirection: 'row',
     borderColor: '#ddd',
-    // position: 'relative'
   }
 };

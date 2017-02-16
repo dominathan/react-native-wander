@@ -1,8 +1,9 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
 import { View, Text, AsyncStorage, TextInput, ListView, Image } from 'react-native';
-import { getFriends, searchForFriends } from '../services/apiActions';
 
+import { getFriends, searchForFriends, addFriend } from '../services/apiActions';
+import Button from './Button';
 
 export class Friends extends Component {
 
@@ -18,10 +19,13 @@ export class Friends extends Component {
     this.state = {
       text: '',
       loadingFriends: true,
-      dataSource: ds.cloneWithRows(['row1', 'row2'])
+      dataSource: ds.cloneWithRows(['row1', 'row2']),
+      searching: false
     };
     this.renderFriends = this.renderFriends.bind(this);
+    this.renderFriendSearch = this.renderFriendSearch.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.addFriendToDatabase = this.addFriendToDatabase.bind(this);
   }
 
   componentDidMount() {
@@ -31,11 +35,24 @@ export class Friends extends Component {
   handleTextChange(text) {
     this.searchForFriendsToAdd(text);
     this.setState({ text });
+    if (text.length === 0) {
+      this.setState({
+        searching: false
+      });
+    }
   }
 
   searchForFriendsToAdd(text) {
+    if (text === '') {
+      return;
+    }
     searchForFriends(`name=${text}`)
-      .then((data) => console.log('FRIENDS SEARCH', data))
+      .then((data) => {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(data),
+          searching: true
+        });
+      })
       .catch(err => console.error('NO SEARACH', err));
   }
 
@@ -47,6 +64,12 @@ export class Friends extends Component {
         });
       })
       .catch((err) => console.error('NO FRIENDS!!!', err));
+  }
+
+  addFriendToDatabase(friend) {
+    addFriend(friend)
+      .then((res) => console.log('added friend', res))
+      .catch((err) => console.error('NO ADD FRIEND', err));
   }
 
   renderFriends(friend) {
@@ -62,7 +85,25 @@ export class Friends extends Component {
     );
   }
 
+  renderFriendSearch(friend) {
+    const friendToAdd = friend;
+    return (
+      <View style={styles.friendContainer}>
+        <Image source={{ uri: friend.photo_url }} style={styles.photo} />
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>
+            {`${friend.first_name} ${friend.last_name}`}
+          </Text>
+          <Button onPress={() => this.addFriendToDatabase(friendToAdd)}>
+            Add friend
+          </Button>
+        </View>
+      </View>
+    );
+  }
+
   render() {
+    const searching = this.state.searching;
     return (
       <View style={styles.container}>
         <TextInput
@@ -72,13 +113,20 @@ export class Friends extends Component {
           value={this.state.text}
           placeholder={this.props.placeholder}
           placeholderTextColor={this.props.placeholderTextColor}
-          clearButtonMode="while-editing"
+          clearButtonMode='while-editing'
         />
-        <ListView
+        { !searching && <ListView
          style={styles.friendContainer}
          dataSource={this.state.dataSource}
          renderRow={this.renderFriends}
-        />
+        /> }
+        { searching && <ListView
+         style={styles.friendContainer}
+         dataSource={this.state.dataSource}
+         renderRow={this.renderFriendSearch}
+        /> }
+
+
       </View>
     );
   }
@@ -93,7 +141,8 @@ const styles = {
     flex: 1,
     flexDirection: 'row',
     marginLeft: 5,
-    marginTop: 7
+    marginTop: 7,
+    height: 20
   },
   text: {
     color: 'black',
@@ -126,7 +175,9 @@ const styles = {
     borderRadius: 20,
   },
   textContainer: {
-    flexDirection: 'column'
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   text: {
     marginLeft: 8,

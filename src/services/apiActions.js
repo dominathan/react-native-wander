@@ -61,6 +61,19 @@ const loginUser = (userProfile) => defaultPost('users', userProfile);
 const getUserPlaces = () => defaultGet('places');
 const getFeed = () => defaultGet('feed');
 const getFriends = () => defaultGet('friends');
-const searchForFriends = (query) => defaultGet('users/search', query)
+const searchForFriends = (query) => defaultGet('users/search', query);
+const addFriend = (friend) => defaultPost('friends', friend);
+const getFriendFeed = () => defaultGet('feed/friends');
+const getExpertFeed = () => defaultGet('feed/experts'); 
 
-export { addPlaceToFavorite, loginUser, getUserPlaces, getFeed, getFriends, searchForFriends };
+export {
+  addPlaceToFavorite,
+  loginUser,
+  getUserPlaces,
+  getFeed,
+  getFriends,
+  searchForFriends,
+  addFriend,
+  getFriendFeed,
+  getExpertFeed
+};

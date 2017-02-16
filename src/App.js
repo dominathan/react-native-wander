@@ -14,12 +14,12 @@ class App extends Component {
   static defaultProps = {}
   render() {
     return (
-      <Router>
+      <Router navigationBarStyle={{backgroundColor: '#3c95cd'}} titleStyle={{color : "#FFF"}}>
         <Scene key='drawer' component={SimpleDrawer} >
           <Scene key='main' tabs={false}>
-            <Scene key="googleMap" component={GoogleMap} title="Google Map" />
+            <Scene key="googleMap" component={GoogleMap} title="Google Map" initial  onRight={ () => this.setState({filterFriends: true})} rightTitle="Friends" />
             <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
-            <Scene key="friends" component={Friends} title="Friends" initial />
+            <Scene key="friends" component={Friends} title="Friends"  />
             <Scene key="login" component={Login} title="Login" />
           </Scene>
         </Scene>
