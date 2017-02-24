@@ -83,7 +83,21 @@ const TabView = (props, context) => {
       routeCallback: () => { drawer.close(); Actions.login(); },
       name: 'Login',
       icon: 'facebook'
-
+    },
+    {
+      routeCallback: () => { drawer.close(); Actions.notifications(); },
+      name: 'Notifications',
+      icon: 'bell'
+    },
+    {
+      routeCallback: () => { drawer.close(); Actions.help(); },
+      name: 'Get Help',
+      icon: 'question-circle'
+    },
+    {
+      routeCallback: () => { drawer.close(); Actions.settings(); },
+      name: 'Settings',
+      icon: 'cogs'
     }
   ]);
   return (
