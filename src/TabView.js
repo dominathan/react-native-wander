@@ -75,8 +75,8 @@ const TabView = (props, context) => {
       icon: 'map'
     },
     {
-      routeCallback: () => { drawer.close(); Actions.testScreen(); },
-      name: 'Test Screen',
+      routeCallback: () => { drawer.close(); Actions.groups(); },
+      name: 'Groups',
       icon: 'gears'
     },
     {
