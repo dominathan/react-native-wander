@@ -21,10 +21,10 @@ export class GoogleMap extends Component {
     this.loadMarkers = this.loadMarkers.bind(this);
     this.filterFriends = this.filterFriends.bind(this);
     this.filterExperts = this.filterExperts.bind(this);
-    this.globalFilter = this.globalFilter.bind(this);
+    this.globalFilter = this.globalFilter.bind(this)
   }
 
-  componentDidMount() {
+  componentWillMount() {
     getUserPlaces()
       .then((data) => {
         this.setState({
@@ -35,18 +35,6 @@ export class GoogleMap extends Component {
       .catch((err) => console.log('fuck balls: ', err));
 
     this.globalFilter();
-  }
-
-  globalFilter() {
-    this.setState({ feedReady: false });
-    getFeed()
-      .then((data) => {
-        this.setState({
-          feed: data || [],
-          feedReady: true
-        });
-      })
-      .catch((err) => console.error('NOO FEED', err));
   }
 
   navigateToAddPlace() {
@@ -66,6 +54,18 @@ export class GoogleMap extends Component {
     }).map((marker) => <MapView.Marker key={marker.key} coordinate={marker.coordinate} title={marker.title} />);
   }
 
+  globalFilter() {
+    this.setState({ feedReady: false });
+    getFeed()
+      .then((data) => {
+        this.setState({
+          feed: data || [],
+          feedReady: true
+        });
+      })
+      .catch((err) => console.error('NOO FEED', err));
+  }
+
   filterFriends() {
     this.setState({ feedReady: false });
     getFriendFeed()
@@ -76,6 +76,7 @@ export class GoogleMap extends Component {
         });
       })
       .catch((err) => console.error('NOO FEED', err));
+
   }
 
   filterExperts() {
@@ -95,13 +96,13 @@ export class GoogleMap extends Component {
 
     const startingPoints = this.state.markers ? this.loadMarkers() : null;
     return (
-      <View style={{ justifyContent: 'space-between' }}>
+      <View>
         <MapView
           initialRegion={{
             latitude: 32.784618,
             longitude: -79.940918,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta: 0.0922 * 1.5,
+            longitudeDelta: 0.0421 * 1.5,
           }}
           style={{ height: 350, margin: 2 }}
         >

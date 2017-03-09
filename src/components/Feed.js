@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { ListView, View, Text, Image, ScrollView } from 'react-native';
 
-
-// Make a Component
 export class Feed extends Component {
 
   constructor(props) {
     super(props);
-    console.log(' THIS IS PROPS', props);
     this.state = {
       dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
       feed: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),

@@ -64,7 +64,9 @@ const getFriends = () => defaultGet('friends');
 const searchForFriends = (query) => defaultGet('users/search', query);
 const addFriend = (friend) => defaultPost('friends', friend);
 const getFriendFeed = () => defaultGet('feed/friends');
-const getExpertFeed = () => defaultGet('feed/experts'); 
+const getExpertFeed = () => defaultGet('feed/experts');
+const getRequestedFriends = () => defaultGet('friends/pending');
+const acceptFriend = (friend) => defaultPost('friends/accept', friend);
 
 export {
   addPlaceToFavorite,
@@ -75,5 +77,7 @@ export {
   searchForFriends,
   addFriend,
   getFriendFeed,
-  getExpertFeed
+  getExpertFeed,
+  getRequestedFriends,
+  acceptFriend
 };
