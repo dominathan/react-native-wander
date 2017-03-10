@@ -26,8 +26,7 @@ export class GooglePlaces extends Component {
   }
 
   render() {
-    const showCommentAndPhotoBox = this.state.showCommentAndPhotoBox;
-    const place = this.state.place;
+    const { showCommentAndPhotoBox, place } = this.state;
 
     return (
       <View style={styles.container}>

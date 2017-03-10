@@ -67,6 +67,7 @@ const getExpertFeed = () => defaultGet('feed/experts');
 const getRequestedFriends = () => defaultGet('friends/pending');
 const acceptFriend = (friend) => defaultPost('friends/accept', friend);
 const getMyGroups = () => defaultGet('groups');
+const createGroup = (group) => defaultPost('groups', group);
 
 export {
   addPlaceToFavorite,
@@ -81,4 +82,5 @@ export {
   getRequestedFriends,
   acceptFriend,
   getMyGroups,
+  createGroup
 };

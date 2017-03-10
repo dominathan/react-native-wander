@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import { ListView, View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  ListView,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
-import Button from './Button';
 
 export class Group extends Component {
 
@@ -11,21 +18,21 @@ export class Group extends Component {
 
     };
 
-    this.addGroupScreen = this.addGroupScreen.bind(this);
+    this.createGroupScreen = this.createGroupScreen.bind(this);
   }
 
   componentWillMount() {
-    
+
   }
 
-  addGroupScreen() {
-    return
+  createGroupScreen() {
+    Actions.createGroup();
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.addGroupScreen} style={styles.createGroup}>
+        <TouchableOpacity onPress={this.createGroupScreen} style={styles.createGroup}>
           <Text style={styles.buttonText}>Create Group</Text>
         </TouchableOpacity>
       </View>
@@ -46,7 +53,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     backgroundColor: '#4296CC',
     borderRadius: 20,
-    borderWidth: 1,
     marginBottom: 50
   },
   buttonText: {

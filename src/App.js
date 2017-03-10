@@ -11,6 +11,7 @@ import { Settings } from './components/Settings';
 import { Help } from './components/Help';
 import { Profile } from './components/Profile';
 import { Group } from './components/Group';
+import { CreateGroup } from './components/CreateGroup';
 import SimpleDrawer from './SimpleDrawer';
 
 // 2. Create a Component
@@ -30,7 +31,8 @@ class App extends Component {
             <Scene key="settings" component={Settings} title="Settings" />
             <Scene key="help" component={Help} title="Help" />
             <Scene key="profile" component={Profile} title="Profile" />
-            <Scene key="groups" component={Group} title="Groups" initial />
+            <Scene key="group" component={Group} title="Groups" />
+            <Scene key="createGroup" component={CreateGroup} title="Create a Group" initial />
           </Scene>
         </Scene>
       </Router>

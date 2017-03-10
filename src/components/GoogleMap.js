@@ -21,7 +21,7 @@ export class GoogleMap extends Component {
     this.loadMarkers = this.loadMarkers.bind(this);
     this.filterFriends = this.filterFriends.bind(this);
     this.filterExperts = this.filterExperts.bind(this);
-    this.globalFilter = this.globalFilter.bind(this)
+    this.globalFilter = this.globalFilter.bind(this);
   }
 
   componentWillMount() {
@@ -51,7 +51,13 @@ export class GoogleMap extends Component {
         },
         title: place.name
       };
-    }).map((marker) => <MapView.Marker key={marker.key} coordinate={marker.coordinate} title={marker.title} />);
+    }).map((marker) => {
+      return (<MapView.Marker
+        key={marker.key}
+        coordinate={marker.coordinate}
+        title={marker.title}
+      />);
+    });
   }
 
   globalFilter() {
@@ -94,7 +100,7 @@ export class GoogleMap extends Component {
   render() {
     const feedReady = this.state.feedReady;
 
-    const startingPoints = this.state.markers ? this.loadMarkers() : null;
+    const startingPoints = this.state.markers.length > 0 ? this.loadMarkers() : null;
     return (
       <View>
         <MapView
