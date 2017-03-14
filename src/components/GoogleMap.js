@@ -1,7 +1,8 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { Icon } from 'react-native-elements';
 import MapView from 'react-native-maps';
 
 import { getUserPlaces, getFeed, getFriendFeed, getExpertFeed } from '../services/apiActions';
@@ -15,7 +16,8 @@ export class GoogleMap extends Component {
     this.state = {
       markers: [],
       feed: null,
-      feedReady: false
+      feedReady: false,
+      selectedFilter: 'feed'
     };
     this.navigateToAddPlace = this.navigateToAddPlace.bind(this);
     this.loadMarkers = this.loadMarkers.bind(this);
@@ -57,6 +59,12 @@ export class GoogleMap extends Component {
         coordinate={marker.coordinate}
         title={marker.title}
       />);
+    });
+  }
+
+  selectedFilterChange(val) {
+    this.setState({
+      selectedFilter: val
     });
   }
 
@@ -102,8 +110,9 @@ export class GoogleMap extends Component {
 
     const startingPoints = this.state.markers.length > 0 ? this.loadMarkers() : null;
     return (
-      <View>
+      <View style={styles.container}>
         <MapView
+          style={styles.map}
           initialRegion={{
             latitude: 32.784618,
             longitude: -79.940918,
@@ -114,31 +123,80 @@ export class GoogleMap extends Component {
         >
           { startingPoints }
         </MapView>
-        <View style={styles.containerStyle}>
-          <Button onPress={this.navigateToAddPlace}>
-            Add Place
-          </Button>
-          <Button onPress={this.filterFriends}>
-            Friend Filter
-          </Button>
-          <Button onPress={this.filterExperts}>
-            Expert Filter
-          </Button>
-          <Button onPress={this.globalFilter}>
-            Global Filter
-          </Button>
+        <View style={styles.publicPrivateContainer}>
+          <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('feed')}>
+            <Text style={this.state.selectedFilter == 'feed' ? styles.selectedFilter : styles.filters}>FEED</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('top')}>
+            <Text style={this.state.selectedFilter == 'top' ? styles.selectedFilter : styles.filters}>TOP</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.filterButton} onPress={() => this.selectedFilterChange('filter')}>
+            <Text style={this.state.selectedFilter == 'filter' ? styles.selectedFilterButton : styles.filterButtonText}>FILTER</Text>
+          </TouchableOpacity>
         </View>
         {feedReady && <Feed feed={this.state.feed} />}
+
+        <TouchableOpacity style={styles.addPlaceButton}>
+          <Icon
+            raised
+            name='add'
+            color='#FFF'
+            containerStyle={{backgroundColor:'#4296CC'}}
+            onPress={this.navigateToAddPlace}
+          />
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
-const styles = {
-  containerStyle: {
-    borderBottomWidth: 1,
-    backgroundColor: '#fff',
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  map: {
+    flex: 1,
+  },
+  addPlaceButton: {
+    position: 'absolute',
+    bottom: 10,
+    right: 12
+  },
+  publicPrivateContainer: {
     flexDirection: 'row',
-    borderColor: '#ddd',
+    alignItems: 'stretch',
+    height: 45,
+    borderBottomWidth: 0.4,
+    borderBottomColor: '#8D8F90',
+  },
+  filters: {
+    marginRight: 10,
+    marginLeft: 25,
+    alignSelf: 'center',
+    color: '#8D8F90',
+    paddingTop: 12
+  },
+  selectedFilter: {
+    color: '#4296CC',
+    borderBottomWidth: 1,
+    borderBottomColor: '#4296CC',
+    paddingTop: 12,
+    marginRight: 10,
+    marginLeft: 25,
+  },
+  selectedFilterButton: {
+    color: '#4296CC',
+    borderBottomWidth: 1,
+    borderBottomColor: '#4296CC',
+    marginLeft: 25,
+  },
+  filterButton: {
+    alignSelf: 'center',
+    position: 'absolute',
+    right: 15,
+    top: 12
+  },
+  filterButtonText: {
+    color: '#8D8F90',
   }
-};
+});

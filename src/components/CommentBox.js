@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { TextInput, View, Text, AsyncStorage } from 'react-native';
-import Button from './Button';
+import { TextInput, View, Text, AsyncStorage, TouchableOpacity } from 'react-native';
+import { Icon, Button } from 'react-native-elements';
+
 import { addPlaceToFavorite } from '../services/apiActions';
 
 // Make a Component
@@ -10,78 +11,149 @@ export class CommentBox extends Component {
     super(props);
     this.state = {
       text: '',
+      favorite: false
     };
-    this._savePlace = this._savePlace.bind(this);
+    this.savePlace = this.savePlace.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.toggleFavorite = this.toggleFavorite.bind(this);
   }
 
-  _savePlace(place) {
+  savePlace(place) {
     const parsedPlace = {
       name: place.name,
       lat: place.geometry.location.lat,
       lng: place.geometry.location.lng,
       google_id: place.id,
       google_place_id: place.place_id,
-      comment: this.state.text
+      comment: this.state.text,
+      favorite: this.state.favorite
     };
     this.saveChosenPlaceAsFavorite(parsedPlace);
   }
 
+  handleTextChange(text) {
+    this.setState({ text });
+  }
+
+  toggleFavorite() {
+    this.setState({
+      favorite: !this.state.favorite
+    });
+  }
+
   saveChosenPlaceAsFavorite(place) {
-    const comment = this.state.text;
+    const { favorite, text } = this.state;
     AsyncStorage.getItem('user', (err, user) => {
       if (err) {
         return err;
       }
-      addPlaceToFavorite({ place: place, user: JSON.parse(user), comment: comment })
+      addPlaceToFavorite({ place: place, user: JSON.parse(user), comment: text, favorite: favorite })
         .then((res) => console.log('SAVED PLACE', res))
         .catch((error) => console.log('Failed Saving Place: ', error));
     });
   }
 
   render() {
+    const {place} = this.props
     return (
-      <View style={styles.viewStyle}>
-        <Text>{this.props.place.name}</Text>
-        <View style={styles.buttonStyle}>
-          <Button>Add Photo</Button>
+      <View style={styles.container}>
+        <View style={styles.placeToAdd}>
+          <Text style={styles.placeToAddText}>{place.name}</Text>
+          <TouchableOpacity style={styles.addFavorite} onPress={this.toggleFavorite}>
+            <Text style={styles.addFavoriteText}>Add as Favorite</Text>
+            {
+              !this.state.favorite ?
+              <Icon
+                style={styles.star}
+                name='star-border'
+              />
+              :
+              <Icon name="star"
+                style={styles.star}
+                color='yellow'
+              />
+            }
+          </TouchableOpacity>
         </View>
-        <TextInput
-          style={styles.textStyle}
-          placeholder="Write something about this place."
-          onChangeText={(text) => {
-            this.setState({text});
-          }}
-          value={this.state.text}
-        />
-        <View style={styles.buttonStyle}>
-          <Button onPress={() => this._savePlace(this.props.place)}>Post</Button>
+        <TouchableOpacity style={styles.addPhotoContainer}>
+          <Icon
+            name='add-circle-outline'
+            color='#4296CC'
+          />
+          <Text style={styles.addPhotoText}>Add Photo</Text>
+        </TouchableOpacity>
+        <View style={styles.commentContainer}>
+          <TextInput
+            style={styles.textStyle}
+            placeholder="Write something about this place."
+            onChangeText={this.handleTextChange}
+            value={this.state.text}
+            autoFocus={true}
+            multiline={true}
+          />
         </View>
+        <Button
+         raised
+         title='Add Place'
+         backgroundColor='#4296CC'
+         onPress={() => this.savePlace(place)}
+         />
       </View>
     );
   }
 }
 
 const styles = {
-  textStyle: {
-    fontSize: 20,
-    color: 'black',
-    margin: 20,
-    borderWidth: 2,
-    borderColor: 'black',
-    height: 35
-  },
-  viewStyle: {
+  container: {
     flex: 1,
-    height: 50,
-    marginTop: 30,
-    justifyContent: 'flex-start',
+  },
+  placeToAdd: {
+    flexDirection: 'row',
+    paddingTop: 10,
+    height: 40,
+    borderBottomWidth: 0.4,
+    borderBottomColor: 'gray'
+  },
+  placeToAddText: {
+    marginLeft: 15
+  },
+  star: {
+    position: 'absolute',
+    top: 1
+  },
+  addFavorite: {
+    position: 'absolute',
+    right: 10,
+    flexDirection: 'row',
+    marginTop: 10
+  },
+  addFavoriteText: {
+    color: '#4296CC',
+    marginLeft: 10
+  },
+  addPhotoContainer: {
+    height: 40,
+    flexDirection: 'row',
+    marginLeft: 15,
+  },
+  addPhotoText: {
+    alignSelf: 'center',
+    marginLeft: 10,
+    color: '#4296CC'
+  },
+  textStyle: {
+    fontSize: 15,
+    margin: 15,
+    color: 'black',
+    alignSelf: 'stretch',
+    height: 200,
+    textAlignVertical: 'top'
+  },
+  commentContainer: {
+    height: 200,
+    alignItems: 'flex-start',
   },
   buttonStyle: {
-    padding: 5,
-    backgroundColor: '#fff',
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    borderColor: '#ddd',
-    position: 'relative'
+
   }
 };

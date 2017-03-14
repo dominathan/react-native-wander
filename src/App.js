@@ -18,6 +18,10 @@ import SimpleDrawer from './SimpleDrawer';
 class App extends Component {
   static propTypes = {}
   static defaultProps = {}
+  constructor(props) {
+    super(props)
+  }
+
   render() {
     return (
       <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }}>
@@ -25,14 +29,14 @@ class App extends Component {
           <Scene key='main' tabs={false}>
             <Scene key="googleMap" component={GoogleMap} title="Google Map" onRight={ () => this.setState({ filterFriends: true })} rightTitle="Friends" />
             <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
-            <Scene key="friends" component={Friends} title="Friends" />
+            <Scene key="friends" component={Friends} title="Friends" initial />
             <Scene key="login" component={Login} title="Login" />
             <Scene key="notifications" component={Notifications} title="Notifications" />
             <Scene key="settings" component={Settings} title="Settings" />
             <Scene key="help" component={Help} title="Help" />
             <Scene key="profile" component={Profile} title="Profile" />
             <Scene key="group" component={Group} title="Groups" />
-            <Scene key="createGroup" component={CreateGroup} title="Create a Group" initial />
+            <Scene key="createGroup" component={CreateGroup} title="Create a Group" />
           </Scene>
         </Scene>
       </Router>

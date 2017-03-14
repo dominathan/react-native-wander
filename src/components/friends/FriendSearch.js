@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
+import { SearchBar } from 'react-native-elements'
 import { searchForFriends } from '../../services/apiActions';
 
 export class FriendSearch extends Component {
@@ -22,24 +23,13 @@ export class FriendSearch extends Component {
   handleTextChange(text) {
     this.searchForFriendsToAdd(text);
     this.setState({ text });
-    if (text.length === 0) {
-      this.setState({
-        searching: false
-      });
-    }
   }
 
   searchForFriendsToAdd(text) {
-    if (text === '') {
-      return;
-    }
+    let friendFunc = this.props.giveBackFriend
     searchForFriends(`name=${text}`)
       .then((data) => {
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(data),
-          searching: true,
-          pendingFriend: false
-        });
+        friendFunc(data)
       })
       .catch(err => console.error('NO SEARACH', err));
   }
@@ -47,15 +37,10 @@ export class FriendSearch extends Component {
 
   render() {
     return (
-      <TextInput
-        autoFocus={this.props.autoFocus}
-        style={styles.textInput}
+      <SearchBar
+        lightTheme
         onChangeText={this.handleTextChange}
-        value={this.state.text}
-        placeholder={this.props.placeholder}
-        placeholderTextColor={this.props.placeholderTextColor}
-        clearButtonMode='while-editing'
-      />
+        placeholder='Search' />
     );
   }
 }

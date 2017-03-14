@@ -21,6 +21,7 @@ export class Friends extends Component {
     };
     this.renderFriendSearch = this.renderFriendSearch.bind(this);
     this.addFriendToDatabase = this.addFriendToDatabase.bind(this);
+    this.handleFriendSearch = this.handleFriendSearch.bind(this);
   }
 
   componentWillMount() {
@@ -30,12 +31,14 @@ export class Friends extends Component {
   loadFriends() {
     getFriends()
       .then((friends) => {
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(friends),
-          loadingFriends: false,
-          pendingFriend: false,
-          search: false
-        });
+        if(friends.length > 0) {
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(friends),
+            loadingFriends: false,
+            pendingFriend: false,
+            search: false
+          });
+        }
       })
       .catch((err) => console.error('NO FRIENDS!!!', err));
   }
@@ -63,6 +66,15 @@ export class Friends extends Component {
     );
   }
 
+  handleFriendSearch(friends) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(friends),
+      loadingFriends: false,
+      pendingFriend: false,
+      search: false
+    })
+  }
+
   renderRequestedFriends(friend) {
     return (
       <View style={styles.friendItem}>
@@ -87,7 +99,7 @@ export class Friends extends Component {
     const { loadingFriends, dataSource } = this.state;
     return (
       <View style={styles.container}>
-        <FriendSearch />
+        <FriendSearch giveBackFriend={this.handleFriendSearch}/>
         { !loadingFriends && <FriendList friends={dataSource} /> }
 
         <FriendsButtons />

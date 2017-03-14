@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import CheckBox from 'react-native-checkbox';
-
+//
 export class FriendDetail extends Component {
   constructor(props) {
     super(props);

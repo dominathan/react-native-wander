@@ -53,6 +53,7 @@ export class CreateGroup extends Component {
   loadFriends() {
     getFriends()
       .then((friends) => {
+        console.log("FRIENDS", friends);
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(friends),
           loadingFriends: false,
