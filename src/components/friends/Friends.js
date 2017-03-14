@@ -1,11 +1,10 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
 import { View, Text, ListView, Image, StyleSheet } from 'react-native';
-import { getFriends, addFriend, acceptFriend } from '../services/apiActions';
-import Button from './Button';
-import FriendsButtons from './friends/friendsButtons';
-import { FriendSearch } from './friends/FriendSearch';
-import { FriendList } from './friends/FriendList';
+import { getFriends, acceptFriend } from '../../services/apiActions';
+import FriendsButtons from './friendsButtons';
+import { FriendSearch } from './FriendSearch';
+import { FriendList } from './FriendList';
 
 export class Friends extends Component {
 
@@ -20,7 +19,6 @@ export class Friends extends Component {
       pendingFriend: false
     };
     this.renderFriendSearch = this.renderFriendSearch.bind(this);
-    this.addFriendToDatabase = this.addFriendToDatabase.bind(this);
     this.handleFriendSearch = this.handleFriendSearch.bind(this);
   }
 
@@ -43,12 +41,6 @@ export class Friends extends Component {
       .catch((err) => console.error('NO FRIENDS!!!', err));
   }
 
-  addFriendToDatabase(friend) {
-    addFriend(friend)
-      .then((resp) => console.log('ADDED FRIEND', resp))
-      .catch((err) => console.error('NO ADD FRIEND', err));
-  }
-
   renderFriendSearch(friend) {
     const friendToAdd = friend;
     return (
@@ -67,6 +59,11 @@ export class Friends extends Component {
   }
 
   handleFriendSearch(friends) {
+    console.log("INPARENT", friends);
+    let friendList = friends.map((friend) => {
+      friend.search = true
+      return friend;
+    })
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(friends),
       loadingFriends: false,

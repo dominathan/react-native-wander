@@ -3,13 +3,12 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Icon } from 'react-native-elements';
-import MapView from 'react-native-maps';
 
 import { getUserPlaces, getFeed, getFriendFeed, getExpertFeed } from '../services/apiActions';
-import Button from './Button';
 import { Feed } from './Feed';
+import { Map } from './map/Map';
 
-export class GoogleMap extends Component {
+export class Home extends Component {
 
   constructor(props) {
     super(props);
@@ -17,49 +16,52 @@ export class GoogleMap extends Component {
       markers: [],
       feed: null,
       feedReady: false,
-      selectedFilter: 'feed'
+      selectedFilter: 'feed',
+      mapRegion: null,
+      watchID: null,
+      lastCall: null
     };
     this.navigateToAddPlace = this.navigateToAddPlace.bind(this);
-    this.loadMarkers = this.loadMarkers.bind(this);
     this.filterFriends = this.filterFriends.bind(this);
     this.filterExperts = this.filterExperts.bind(this);
     this.globalFilter = this.globalFilter.bind(this);
   }
 
   componentWillMount() {
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      let region = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.00922*3005,
+          longitudeDelta: 0.00421*3005
+      }
+      this.state.mapRegion = region;
+      this.onRegionChange(region, position.coords.accuracy);
+      this.globalFilter();
+    })
+
     getUserPlaces()
       .then((data) => {
         this.setState({
           markers: data
         });
       })
-      .then(this.loadMarkers)
       .catch((err) => console.log('fuck balls: ', err));
+  }
 
-    this.globalFilter();
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.state.watchID);
+  }
+
+  onRegionChange(region, gpsAccuracy) {
+     this.setState({
+         mapRegion: region,
+         gpsAccuracy: gpsAccuracy || this.state.gpsAccuracy
+     });
   }
 
   navigateToAddPlace() {
     Actions.googlePlaces();
-  }
-
-  loadMarkers() {
-    return this.state.markers.map((place) => {
-      return {
-        key: place.id,
-        coordinate: {
-          latitude: place.lat,
-          longitude: place.lng
-        },
-        title: place.name
-      };
-    }).map((marker) => {
-      return (<MapView.Marker
-        key={marker.key}
-        coordinate={marker.coordinate}
-        title={marker.title}
-      />);
-    });
   }
 
   selectedFilterChange(val) {
@@ -72,6 +74,7 @@ export class GoogleMap extends Component {
     this.setState({ feedReady: false });
     getFeed()
       .then((data) => {
+        console.log("FEED: ", data)
         this.setState({
           feed: data || [],
           feedReady: true
@@ -106,23 +109,12 @@ export class GoogleMap extends Component {
   }
 
   render() {
-    const feedReady = this.state.feedReady;
+    const {feedReady, mapRegion, feed, markers} = this.state;
 
-    const startingPoints = this.state.markers.length > 0 ? this.loadMarkers() : null;
     return (
       <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          initialRegion={{
-            latitude: 32.784618,
-            longitude: -79.940918,
-            latitudeDelta: 0.0922 * 1.5,
-            longitudeDelta: 0.0421 * 1.5,
-          }}
-          style={{ height: 350, margin: 2 }}
-        >
-          { startingPoints }
-        </MapView>
+        {mapRegion && <Map {...this.state} onRegionChange={this.onRegionChange.bind(this)} markers={markers}/>}
+
         <View style={styles.publicPrivateContainer}>
           <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('feed')}>
             <Text style={this.state.selectedFilter == 'feed' ? styles.selectedFilter : styles.filters}>FEED</Text>
@@ -134,7 +126,7 @@ export class GoogleMap extends Component {
             <Text style={this.state.selectedFilter == 'filter' ? styles.selectedFilterButton : styles.filterButtonText}>FILTER</Text>
           </TouchableOpacity>
         </View>
-        {feedReady && <Feed feed={this.state.feed} />}
+        {feedReady && <Feed feed={feed} />}
 
         <TouchableOpacity style={styles.addPlaceButton}>
           <Icon
@@ -188,6 +180,7 @@ const styles = StyleSheet.create({
     color: '#4296CC',
     borderBottomWidth: 1,
     borderBottomColor: '#4296CC',
+    marginRight: 10,
     marginLeft: 25,
   },
   filterButton: {
