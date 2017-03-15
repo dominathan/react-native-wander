@@ -13,6 +13,7 @@ const propTypes = {
   name: PropTypes.string,
   sceneStyle: View.propTypes.style,
   title: PropTypes.string,
+  user: PropTypes.object
 };
 
 const styles = StyleSheet.create({
@@ -102,7 +103,7 @@ const TabView = (props, context) => {
   ]);
   return (
     <View style={[styles.container, props.sceneStyle]}>
-      <TabViewHeader name="Brandon Hare" userName="@dominathan" profileImage="https://www.placecage.com/75/75.png" />
+      <TabViewHeader user={props.user} drawer={drawer} />
       <ListView
         dataSource={routes}
         renderRow={(rowData) =>

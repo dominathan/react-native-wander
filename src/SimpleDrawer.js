@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from 'react-native';
 import Drawer from 'react-native-drawer';
 import { Actions, DefaultRenderer } from 'react-native-router-flux';
 import TabView from './TabView';
@@ -6,6 +7,20 @@ import TabView from './TabView';
 class SimpleDrawer extends Component {
   static propTypes = {
     navigationState: React.PropTypes.object,
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: {}
+    }
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    AsyncStorage.getItem('user', (err, user) => {
+      this.setState({user: JSON.parse(user)});
+    })
   }
 
   render() {
@@ -18,7 +33,7 @@ class SimpleDrawer extends Component {
        onOpen={() => Actions.refresh({ key: state.key, open: true })}
        onClose={() => Actions.refresh({ key: state.key, open: false })}
        type="displace"
-       content={<TabView />}
+       content={<TabView user={this.state.user}/>}
        tapToClose={true}
        openDrawerOffset={0.2}
        panCloseMask={0.2}

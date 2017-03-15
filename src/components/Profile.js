@@ -1,24 +1,30 @@
 import React, { Component } from 'react';
-import { ListView, View, Text, Image, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
 import { getUserPlaces } from '../services/apiActions';
 import { Map } from './map/Map';
 
 export class Profile extends Component {
-
   constructor(props) {
-    super(props);
-    console.log("I AM ME: ", props)
+    super(props)
     this.state = {
-      markers: []
+      markers: [],
+      favorites: [],
+      person: this.props.person || null
     };
+
   }
 
   componentWillMount() {
-    getUserPlaces()
+    this.userPlaces();
+  }
+
+  userPlaces() {
+    getUserPlaces(this.state.person)
       .then((data) => {
         this.setState({
-          markers: data
+          markers: data.places,
+          favorites: data.favorites
         });
       })
       .catch((err) => console.log('fuck balls: ', err));
@@ -29,17 +35,16 @@ export class Profile extends Component {
   }
 
   render() {
-    const { markers} = this.state
-    const { person } = this.props
+    const { markers, person } = this.state;
+
     return (
-      <View style={styles.container}>
+       <View style={styles.container}>
         <View style={styles.mapContainer}>
-          <Map markers={markers} styles={styles.map}/>
+          <Map markers={markers} styles={styles.map} />
         </View>
-        <View style={styles.photoContainer}>
+        { person && <View style={styles.photoContainer}>
           <Image source={{ uri: person.photo_url }} style={styles.photo} />
-        </View>
-        <Text>{person.first_name}</Text>
+        </View> }
       </View>
     );
   }
@@ -57,12 +62,14 @@ const styles = StyleSheet.create({
   photoContainer: {
     flex: 1,
     position: 'relative',
-    top: -55
+    top: -70,
   },
   photo: {
     height: 80,
     width: 80,
     borderRadius: 40,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    borderWidth: 2,
+    borderColor: '#FFF'
   }
 });

@@ -5,13 +5,12 @@ import { Actions } from 'react-native-router-flux';
 import { Icon } from 'react-native-elements';
 import MapView from 'react-native-maps';
 
-import { getUserPlaces } from '../../services/apiActions';
+import { getPlaces } from '../../services/apiActions';
 
 export class Map extends Component {
 
   constructor(props) {
     super(props);
-    console.log("PROPS", props)
     this.loadMarkers = this.loadMarkers.bind(this);
   }
 
@@ -38,13 +37,14 @@ export class Map extends Component {
   }
 
   render() {
+    console.log("RE RENDER", this.props.region)
     const startingPoints = this.props.markers.length > 0 ? this.loadMarkers() : null;
-    const {mapRegion, gpsAccuracy} = this.props;
+    const {Region, gpsAccuracy} = this.props;
     return (
       <MapView.Animated
         style={{ height: 300, margin: 2, alignSelf: 'stretch' }}
         onRegionChange={this.props.onRegionChange}
-        region={this.props.mapRegion}
+        region={this.props.region}
       >
         { startingPoints }
       </MapView.Animated>

@@ -1,23 +1,35 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+
 // Make a Component
+
+
 const TabViewHeader = (props) => {
     const { imageViewStyle,
             profileImageStyle,
-            textStyle, 
+            textStyle,
             textViewStyle,
-            viewStyle 
+            viewStyle
     } = styles;
+
+    const goToProfile = () => {
+      props.drawer.close();
+      Actions.profile({person: props.user})
+    }
+
     return (
+      <TouchableOpacity onPress={() => goToProfile()}>
         <View style={viewStyle}>
             <View style={imageViewStyle}>
-                <Image style={profileImageStyle} source={{ uri: 'https://www.placecage.com/75/75.png' }} />
+                <Image style={profileImageStyle} source={{ uri: props.user.photo_url }} />
             </View>
             <View style={textViewStyle}>
-                <Text style={textStyle}>{props.name}</Text>
-                <Text style={textStyle}>{props.userName}</Text>
+                <Text style={textStyle}>{props.user.first_name} {props.user.last_name}</Text>
+                <Text style={textStyle}>{props.user.email}</Text>
             </View>
         </View>
+      </TouchableOpacity>
     );
 };
 

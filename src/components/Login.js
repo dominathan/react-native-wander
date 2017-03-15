@@ -2,8 +2,11 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Text, AsyncStorage } from 'react-native';
 import Auth0Lock from 'react-native-lock';
+import { Actions } from 'react-native-router-flux';
+
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from '../../config/auth0';
 import { loginUser } from '../services/apiActions';
+
 
 const lock = new Auth0Lock({
   clientId: AUTH0_CLIENT_ID,
@@ -37,9 +40,11 @@ export class Login extends Component {
   }
 
   handleLoginSuccess(profile) {
-    //send profile to API and verify token
     loginUser({ user: this.parseProfile(profile) })
-    .then((res) => AsyncStorage.setItem('user', JSON.stringify(res)))
+    .then((res) => {A
+      syncStorage.setItem('user', JSON.stringify(res));
+      Actions.home();
+    })
     .catch((err) => {
       console.log('FUCK BALLS', err);
     });

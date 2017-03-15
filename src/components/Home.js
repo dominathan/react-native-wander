@@ -2,9 +2,10 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import MapView from 'react-native-maps';
 import { Icon } from 'react-native-elements';
 
-import { getUserPlaces, getFeed, getFriendFeed, getExpertFeed } from '../services/apiActions';
+import { getPlaces, getFeed, getFriendFeed, getExpertFeed } from '../services/apiActions';
 import { Feed } from './Feed';
 import { Map } from './map/Map';
 
@@ -17,10 +18,16 @@ export class Home extends Component {
       feed: null,
       feedReady: false,
       selectedFilter: 'feed',
-      mapRegion: null,
+      region: new MapView.AnimatedRegion({
+        latitude: 32.8039917,
+        longitude: -79.9525327,
+        latitudeDelta: 0.00922*1.5,
+        longitudeDelta: 0.00421*1.5
+      }),
       watchID: null,
       lastCall: null
     };
+    this.onRegionChange = this.onRegionChange.bind(this);
     this.navigateToAddPlace = this.navigateToAddPlace.bind(this);
     this.filterFriends = this.filterFriends.bind(this);
     this.filterExperts = this.filterExperts.bind(this);
@@ -29,18 +36,17 @@ export class Home extends Component {
 
   componentWillMount() {
     this.watchID = navigator.geolocation.watchPosition((position) => {
-      let region = {
+      let region = new MapView.AnimatedRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.00922*3005,
-          longitudeDelta: 0.00421*3005
-      }
-      this.state.mapRegion = region;
-      this.onRegionChange(region, position.coords.accuracy);
+          latitudeDelta: 0.00922*1.5,
+          longitudeDelta: 0.00421*1.5
+      })
+      this.state.region = region;
       this.globalFilter();
     })
 
-    getUserPlaces()
+    getPlaces()
       .then((data) => {
         this.setState({
           markers: data
@@ -53,11 +59,8 @@ export class Home extends Component {
     navigator.geolocation.clearWatch(this.state.watchID);
   }
 
-  onRegionChange(region, gpsAccuracy) {
-     this.setState({
-         mapRegion: region,
-         gpsAccuracy: gpsAccuracy || this.state.gpsAccuracy
-     });
+  onRegionChange(region) {
+     this.state.region.setValue(region);
   }
 
   navigateToAddPlace() {
@@ -109,11 +112,11 @@ export class Home extends Component {
   }
 
   render() {
-    const {feedReady, mapRegion, feed, markers} = this.state;
+    const {feedReady, region, feed, markers} = this.state;
 
     return (
       <View style={styles.container}>
-        {mapRegion && <Map {...this.state} onRegionChange={this.onRegionChange.bind(this)} markers={markers}/>}
+        {region && <Map onRegionChange={this.onRegionChange} region={this.state.region} markers={markers}/>}
 
         <View style={styles.publicPrivateContainer}>
           <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('feed')}>

@@ -34,8 +34,6 @@ export class GooglePlaces extends Component {
           placeholder='Bar, Restaurant, Place of Interest'
           minLength={2}
           onPress={(data, details) => { // 'details' is provided when fetchDetails = true
-            console.log('GOOGLE DATA', data);
-            console.log('GOOGLE DETAILS', details);
           }}
           query={{
            // available options: https://developers.google.com/places/web-service/autocomplete

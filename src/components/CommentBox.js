@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextInput, View, Text, AsyncStorage, TouchableOpacity } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 
 import { addPlaceToFavorite } from '../services/apiActions';
 
@@ -26,7 +27,9 @@ export class CommentBox extends Component {
       google_id: place.id,
       google_place_id: place.place_id,
       comment: this.state.text,
-      favorite: this.state.favorite
+      favorite: this.state.favorite,
+      city: place.address_components[3].long_name,
+      country: place.address_components[6].long_name
     };
     this.saveChosenPlaceAsFavorite(parsedPlace);
   }
@@ -48,13 +51,14 @@ export class CommentBox extends Component {
         return err;
       }
       addPlaceToFavorite({ place: place, user: JSON.parse(user), comment: text, favorite: favorite })
-        .then((res) => console.log('SAVED PLACE', res))
+        .then((res) => Actions.home())
         .catch((error) => console.log('Failed Saving Place: ', error));
     });
   }
 
   render() {
     const {place} = this.props
+    console.log("PLACE", place);
     return (
       <View style={styles.container}>
         <View style={styles.placeToAdd}>
