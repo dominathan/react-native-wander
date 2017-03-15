@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { API_BASE } from '../../config/apiBase';
+import { Actions } from 'react-native-router-flux';
 
 const headers = (token) => {
   return {
@@ -15,7 +16,7 @@ const defaultPost = (subUrl, data) => {
     AsyncStorage.getItem('token', (err, token) => {
      if (err) {
        console.log(' NO TOKEN: ', err);
-       reject(err);
+       Actions.login()
      }
      const parsedToken = JSON.parse(token);
      fetch(`${API_BASE}/${subUrl}`, {
@@ -35,7 +36,7 @@ const defaultGet = (subUrl, params) => {
     AsyncStorage.getItem('token', (err, token) => {
      if (err) {
        console.log(' NO TOKEN: ', err);
-       reject(err);
+       Actions.login()
      }
      const parsedToken = JSON.parse(token);
      let url = '';

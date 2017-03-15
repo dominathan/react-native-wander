@@ -18,7 +18,6 @@ export class Friends extends Component {
       searching: false,
       pendingFriend: false
     };
-    this.renderFriendSearch = this.renderFriendSearch.bind(this);
     this.handleFriendSearch = this.handleFriendSearch.bind(this);
   }
 
@@ -39,23 +38,6 @@ export class Friends extends Component {
         }
       })
       .catch((err) => console.error('NO FRIENDS!!!', err));
-  }
-
-  renderFriendSearch(friend) {
-    const friendToAdd = friend;
-    return (
-      <View style={styles.friendItem}>
-        <Image source={{ uri: friend.photo_url }} style={styles.photo} />
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>
-            {`${friend.first_name} ${friend.last_name}`}
-          </Text>
-          <Button onPress={() => this.addFriendToDatabase(friendToAdd)}>
-            Add friend
-          </Button>
-        </View>
-      </View>
-    );
   }
 
   handleFriendSearch(friends) {

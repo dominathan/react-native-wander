@@ -45,7 +45,7 @@ export class FriendDetail extends Component {
     const friend = this.props.friend;
     return (
       <View style={styles.friendItem}>
-        <Image source={{ uri: friend.photo_url }} style={styles.photo} />
+        <Image source={{ uri: friend.photo_url || null }} style={styles.photo} />
         <View style={styles.textContainer}>
           <TouchableOpacity onPress={() => this.goToProfile(friend)}>
             <Text style={styles.text}>

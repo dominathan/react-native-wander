@@ -40,7 +40,7 @@ const FriendsButtons = () => {
         Find friends
       </Button>
       <Button onPress={() => getRequestedFriendsList()}>
-        Pending Friends
+        Friend Requests
       </Button>
     </View>
   );

@@ -41,8 +41,8 @@ export class Login extends Component {
 
   handleLoginSuccess(profile) {
     loginUser({ user: this.parseProfile(profile) })
-    .then((res) => {A
-      syncStorage.setItem('user', JSON.stringify(res));
+    .then((res) => {
+      AsyncStorage.setItem('user', JSON.stringify(res));
       Actions.home();
     })
     .catch((err) => {

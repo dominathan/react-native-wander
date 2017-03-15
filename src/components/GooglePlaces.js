@@ -33,6 +33,9 @@ export class GooglePlaces extends Component {
         {!showCommentAndPhotoBox && <GooglePlacesAutocomplete
           placeholder='Bar, Restaurant, Place of Interest'
           minLength={2}
+          autoFocus
+          currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+          currentLocationLabel="Current location"
           onPress={(data, details) => { // 'details' is provided when fetchDetails = true
           }}
           query={{

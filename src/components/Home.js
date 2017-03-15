@@ -64,7 +64,7 @@ export class Home extends Component {
   }
 
   navigateToAddPlace() {
-    Actions.googlePlaces();
+    Actions.googlePlaces({region: this.state.region});
   }
 
   selectedFilterChange(val) {
@@ -77,7 +77,7 @@ export class Home extends Component {
     this.setState({ feedReady: false });
     getFeed()
       .then((data) => {
-        console.log("FEED: ", data)
+        if(data.errors) { Actions.login(); return }
         this.setState({
           feed: data || [],
           feedReady: true
