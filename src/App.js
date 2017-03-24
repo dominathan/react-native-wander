@@ -1,6 +1,7 @@
 // 1. Import library to help create a comment.
 import React, { Component } from 'react';
 import { Scene, Router } from 'react-native-router-flux';
+import { StatusBar } from 'react-native';
 
 import { GooglePlaces } from './components/GooglePlaces';
 import { Home } from './components/Home';
@@ -20,28 +21,29 @@ class App extends Component {
   static defaultProps = {}
   constructor(props) {
     super(props)
+    StatusBar.setBarStyle('light-content');
   }
 
   render() {
-    return (
-      <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }}>
-        <Scene key='drawer' component={SimpleDrawer} >
-          <Scene key='main' tabs={false}>
-            <Scene key="home" component={Home} title="Home" initial />
-            <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
-            <Scene key="friends" component={Friends} title="Friends" />
-            <Scene key="login" component={Login} title="Login" />
-            <Scene key="notifications" component={Notifications} title="Notifications" />
-            <Scene key="settings" component={Settings} title="Settings" />
-            <Scene key="help" component={Help} title="Help" />
-            <Scene key="profile" component={Profile} title="Profile" />
-            <Scene key="groups" component={Group} title="Groups" />
-            <Scene key="createGroup" component={CreateGroup} title="Create a Group" />
-          </Scene>
-        </Scene>
-      </Router>
-    );
+      return (
+          <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }}>
+            <Scene key='drawer' component={SimpleDrawer} >
+              <Scene key='main' tabs={false}>
+                <Scene key="home" component={Home} title="Home" initial />
+                <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
+                <Scene key="friends" component={Friends} title="Friends" />
+                <Scene key="login" component={Login} title="Login" />
+                <Scene key="notifications" component={Notifications} title="Notifications" />
+                <Scene key="settings" component={Settings} title="Settings" />
+                <Scene key="help" component={Help} title="Help" />
+                <Scene key="profile" component={Profile} title="Profile" />
+                <Scene key="groups" component={Group} title="Groups" />
+                <Scene key="createGroup" component={CreateGroup} title="Create a Group" />
+              </Scene>
+            </Scene>
+          </Router>
+      );
+    }
   }
-}
 
 export default App;

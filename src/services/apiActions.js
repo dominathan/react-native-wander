@@ -36,7 +36,7 @@ const defaultGet = (subUrl, params) => {
     AsyncStorage.getItem('token', (err, token) => {
      if (err) {
        console.log(' NO TOKEN: ', err);
-       Actions.login()
+       Actions.login();
      }
      const parsedToken = JSON.parse(token);
      let url = '';
