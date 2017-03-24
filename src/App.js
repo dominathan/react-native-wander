@@ -10,7 +10,7 @@ import { Friends } from './components/friends/Friends';
 import { Notifications } from './components/Notifications';
 import { Settings } from './components/Settings';
 import { Help } from './components/Help';
-import { Profile } from './components/Profile';
+import { Profile } from './components/profile/Profile';
 import { Group } from './components/Group';
 import { CreateGroup } from './components/CreateGroup';
 import SimpleDrawer from './SimpleDrawer';

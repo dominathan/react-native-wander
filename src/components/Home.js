@@ -112,7 +112,7 @@ export class Home extends Component {
   }
 
   render() {
-    const {feedReady, region, feed, markers} = this.state;
+    const { feedReady, region, feed, markers } = this.state;
 
     return (
       <View style={styles.container}>
@@ -120,13 +120,13 @@ export class Home extends Component {
 
         <View style={styles.publicPrivateContainer}>
           <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('feed')}>
-            <Text style={this.state.selectedFilter == 'feed' ? styles.selectedFilter : styles.filters}>FEED</Text>
+            <Text style={this.state.selectedFilter === 'feed' ? styles.selectedFilter : styles.filters}>FEED</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('top')}>
-            <Text style={this.state.selectedFilter == 'top' ? styles.selectedFilter : styles.filters}>TOP</Text>
+            <Text style={this.state.selectedFilter === 'top' ? styles.selectedFilter : styles.filters}>TOP</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.filterButton} onPress={() => this.selectedFilterChange('filter')}>
-            <Text style={this.state.selectedFilter == 'filter' ? styles.selectedFilterButton : styles.filterButtonText}>FILTER</Text>
+            <Text style={this.state.selectedFilter === 'filter' ? styles.selectedFilterButton : styles.filterButtonText}>FILTER</Text>
           </TouchableOpacity>
         </View>
         {feedReady && <Feed feed={feed} />}
@@ -136,7 +136,7 @@ export class Home extends Component {
             raised
             name='add'
             color='#FFF'
-            containerStyle={{backgroundColor:'#4296CC'}}
+            containerStyle={{ backgroundColor: '#4296CC' }}
             onPress={this.navigateToAddPlace}
           />
         </TouchableOpacity>

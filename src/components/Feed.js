@@ -5,18 +5,12 @@ export class Feed extends Component {
 
   constructor(props) {
     super(props);
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
-      feed: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
+      dataSource: ds.cloneWithRows(props.feed),
+      feed: ds.cloneWithRows(props.feed)
     };
     this.renderFeed = this.renderFeed.bind(this);
-  }
-
-  componentWillMount() {
-    const ds = this.state.dataSource.cloneWithRows(this.props.feed);
-    this.setState({
-      feed: ds
-    });
   }
 
   renderFeed(feed) {
