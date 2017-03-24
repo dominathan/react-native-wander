@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import { ScrollView, ListView, View, StyleSheet } from 'react-native';
-import { FriendDetail } from './FriendDetail';
+import { GroupDetail } from './GroupDetail';
 
-export class FriendList extends Component {
+export class GroupList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loadingFriends: true,
-      searching: false,
-      pendingFriend: false
     };
-    this.renderFriends = this.renderFriends.bind(this);
+    this.renderGroups = this.renderGroups.bind(this);
   }
 
-  renderFriends(friend) {
+  renderGroups(group) {
     return (
-      <FriendDetail friend={friend} isGroup={this.props.isGroup} />
+      <GroupDetail group={group} />
     );
   }
 
@@ -23,8 +20,8 @@ export class FriendList extends Component {
     return (
       <ScrollView style={styles.scrollView}>
         <ListView
-         dataSource={this.props.friends}
-         renderRow={this.renderFriends}
+         dataSource={this.props.groups}
+         renderRow={this.renderGroups}
          renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
         />
       </ScrollView>
@@ -42,5 +39,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
     marginLeft: 15
-  },
+  }
 });

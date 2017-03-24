@@ -5,22 +5,12 @@ import { getFriends, getRequestedFriends } from '../../services/apiActions';
 import Button from '../Button';
 
 const loadFriends = () => {
-  getFriends()
-    .then((friends) => {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(friends),
-        loadingFriends: false,
-        pendingFriend: false,
-        search: false
-      });
-    })
-    .catch((err) => console.error('NO FRIENDS!!!', err));
+
 };
 
 const getRequestedFriendsList = () => {
   getRequestedFriends()
     .then((data) => {
-      console.log('REQUSTED FRIENDS', data);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(data),
         searching: false,
@@ -30,17 +20,18 @@ const getRequestedFriendsList = () => {
     .catch(err => console.error('NO SEARACH', err));
 };
 
-const FriendsButtons = () => {
+const FriendsButtons = (props) => {
+  const { getRequestedFriendsList, getFriends } = props;
   return (
     <View style={styles.friendButtons}>
-      <Button onPress={() => loadFriends()}>
+      <Button onPress={() => getFriends()}>
         Friends
       </Button>
       <Button onPress={() => console.log('bleh')}>
         Find friends
       </Button>
       <Button onPress={() => getRequestedFriendsList()}>
-        Friend Requests
+        Pending Requests
       </Button>
     </View>
   );

@@ -67,10 +67,16 @@ const searchForFriends = (query) => defaultGet('users/search', query);
 const addFriend = (friend) => defaultPost('friends', friend);
 const getFriendFeed = () => defaultGet('feed/friends');
 const getExpertFeed = () => defaultGet('feed/experts');
-const getRequestedFriends = () => defaultGet('friends/pending');
+const getRequestedFriends = () => defaultGet('friends/requested');
 const acceptFriend = (friend) => defaultPost('friends/accept', friend);
+const declineFriend = (friend) => defaultPost('friends/decline', friend);
 const getMyGroups = () => defaultGet('groups');
 const createGroup = (group) => defaultPost('groups', group);
+const getPrivateGroups = () => defaultGet('groups/private');
+const getPublicGroups = () => defaultGet('groups/public');
+const joinPublicGroup = (group) => defaultPost('groups/public', group);
+const joinPrivateGroup = (group) => defaultPost('groups/private', group);
+const searchForGroups = (query) => defaultGet('groups/search', query);
 
 export {
   addPlaceToFavorite,
@@ -86,6 +92,12 @@ export {
   getExpertFeed,
   getRequestedFriends,
   acceptFriend,
+  declineFriend,
   getMyGroups,
-  createGroup
+  createGroup,
+  getPublicGroups,
+  getPrivateGroups,
+  joinPublicGroup,
+  joinPrivateGroup,
+  searchForGroups
 };
