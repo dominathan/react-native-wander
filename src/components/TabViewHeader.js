@@ -37,17 +37,17 @@ const styles = {
     imageViewStyle: {
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 37.5,
+        borderRadius: 30,
         marginRight: 15,
         marginLeft: 15
     },
     profileImageStyle: {
-        width: 75,
-        height: 75,
-        borderRadius: 37.5
+        width: 60,
+        height: 60,
+        borderRadius: 30
     },
     textStyle: {
-        fontSize: 20,
+        fontSize: 16,
         color: '#8D8F90'
     },
     textViewStyle: {
