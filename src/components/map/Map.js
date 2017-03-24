@@ -42,7 +42,7 @@ export class Map extends Component {
     const {Region, gpsAccuracy} = this.props;
     return (
       <MapView.Animated
-        style={{ height: 300, margin: 2, alignSelf: 'stretch' }}
+        style={{ height: 300, alignSelf: 'stretch' }}
         onRegionChange={this.props.onRegionChange}
         region={this.props.region}
       >

@@ -61,6 +61,7 @@ const loginUser = (userProfile) => defaultPost('users', userProfile);
 const getPlaces = () => defaultGet('places');
 const getUserPlaces = (user) => defaultPost('places/user', user);
 const getFeed = () => defaultGet('feed');
+const getUserFeed = () => defaultGet('feed/users');
 const getFriends = () => defaultGet('friends');
 const searchForFriends = (query) => defaultGet('users/search', query);
 const addFriend = (friend) => defaultPost('friends', friend);
@@ -80,6 +81,7 @@ const searchForGroups = (query) => defaultGet('groups/search', query);
 export {
   addPlaceToFavorite,
   loginUser,
+  getUserFeed,
   getUserPlaces,
   getPlaces,
   getFeed,

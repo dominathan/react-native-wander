@@ -4,7 +4,6 @@ import { Actions } from 'react-native-router-flux';
 
 // Make a Component
 
-
 const TabViewHeader = (props) => {
     const { imageViewStyle,
             profileImageStyle,

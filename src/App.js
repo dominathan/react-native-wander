@@ -10,7 +10,7 @@ import { Friends } from './components/friends/Friends';
 import { Notifications } from './components/Notifications';
 import { Settings } from './components/Settings';
 import { Help } from './components/Help';
-import { Profile } from './components/Profile';
+import { Profile } from './components/profile/Profile';
 import { Group } from './components/groups/Group';
 import { CreateGroup } from './components/groups/CreateGroup';
 import { GroupSearch } from './components/groups/GroupSearch';
