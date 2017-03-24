@@ -7,8 +7,8 @@ import {
   StyleSheet,
   TouchableOpacity } from 'react-native';
 
-import { getFriends, createGroup } from '../services/apiActions';
-import { FriendList } from './friends/FriendList';
+import { getFriends, createGroup } from '../../services/apiActions';
+import { FriendList } from '../friends/FriendList';
 
 export class CreateGroup extends Component {
 
@@ -44,7 +44,6 @@ export class CreateGroup extends Component {
       friends: this.state.dataSource._dataBlob.s1.filter((friend) => friend.invited),
       private: this.state.private
     };
-    console.log("GROUP", group);
     createGroup(group)
       .then((data) => console.log('GOT DATA', data))
       .catch((err) => console.error('NO CREATION', err));
@@ -53,7 +52,6 @@ export class CreateGroup extends Component {
   loadFriends() {
     getFriends()
       .then((friends) => {
-        console.log("FRIENDS", friends);
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(friends),
           loadingFriends: false,

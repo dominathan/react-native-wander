@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Icon } from 'react-native-elements';
-import CheckBox from 'react-native-checkbox';
+import { Icon, CheckBox } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import { addFriend, acceptFriend, declineFriend } from '../../services/apiActions';
@@ -10,7 +9,7 @@ export class FriendDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedButton: false
+      checked: false
     };
 
     this.addFriendToDatabase = this.addFriendToDatabase.bind(this);
@@ -43,16 +42,18 @@ export class FriendDetail extends Component {
   }
 
   renderCheckBox(friend) {
-    friend.invited = this.state.checkedButton;
     return (
       <CheckBox
-        label=''
-        checked={friend.checked}
-        onChange={(checked) => {
-          friend.invited = !checked;
-          this.state.checkedButton = !checked;
+        checked={this.state.checked}
+
+        onPress={ _ => {
+          friend.invited = !this.state.checked
+          this.setState({
+            checked: !this.state.checked
+          })
+          console.log(friend)
         }}
-        containerStyle={styles.checkboxContainer}
+
       />
     );
   }
