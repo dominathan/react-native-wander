@@ -66,8 +66,9 @@ const searchForFriends = (query) => defaultGet('users/search', query);
 const addFriend = (friend) => defaultPost('friends', friend);
 const getFriendFeed = () => defaultGet('feed/friends');
 const getExpertFeed = () => defaultGet('feed/experts');
-const getRequestedFriends = () => defaultGet('friends/pending');
+const getRequestedFriends = () => defaultGet('friends/requested');
 const acceptFriend = (friend) => defaultPost('friends/accept', friend);
+const declineFriend = (friend) => defaultPost('friends/decline', friend);
 const getMyGroups = () => defaultGet('groups');
 const createGroup = (group) => defaultPost('groups', group);
 

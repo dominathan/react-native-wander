@@ -27,9 +27,9 @@ class App extends Component {
       <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }}>
         <Scene key='drawer' component={SimpleDrawer} >
           <Scene key='main' tabs={false}>
-            <Scene key="home" component={Home} title="Home" initial />
+            <Scene key="home" component={Home} title="Home"  />
             <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
-            <Scene key="friends" component={Friends} title="Friends" />
+            <Scene key="friends" component={Friends} title="Friends" initial />
             <Scene key="login" component={Login} title="Login" />
             <Scene key="notifications" component={Notifications} title="Notifications" />
             <Scene key="settings" component={Settings} title="Settings" />

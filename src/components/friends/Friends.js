@@ -1,7 +1,7 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
 import { View, Text, ListView, Image, StyleSheet } from 'react-native';
-import { getFriends, acceptFriend } from '../../services/apiActions';
+import { getFriends, acceptFriend, getRequestedFriends } from '../../services/apiActions';
 import FriendsButtons from './friendsButtons';
 import { FriendSearch } from './FriendSearch';
 import { FriendList } from './FriendList';
@@ -19,6 +19,8 @@ export class Friends extends Component {
       pendingFriend: false
     };
     this.handleFriendSearch = this.handleFriendSearch.bind(this);
+    this.getRequestedFriendsList = this.getRequestedFriendsList.bind(this);
+    this.loadFriends = this.loadFriends.bind(this);
   }
 
   componentWillMount() {
@@ -41,38 +43,33 @@ export class Friends extends Component {
   }
 
   handleFriendSearch(friends) {
-    console.log("INPARENT", friends);
     let friendList = friends.map((friend) => {
-      friend.search = true
+      friend.search = true;
       return friend;
     })
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(friends),
+      dataSource: this.state.dataSource.cloneWithRows(friendList),
       loadingFriends: false,
       pendingFriend: false,
       search: false
     })
   }
 
-  renderRequestedFriends(friend) {
-    return (
-      <View style={styles.friendItem}>
-        <Image source={{ uri: friend.photo_url }} style={styles.photo} />
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>
-            {`${friend.first_name} ${friend.last_name}`}
-          </Text>
-          <Button
-            onPress={() => acceptFriend(friend)
-                            .then((resp) => console.log('ADDED FRIEND', resp))
-                            .catch((err) => console.error('NO ADD FRIEND', err))
-         }>
-            Add friend
-          </Button>
-        </View>
-      </View>
-    );
-  }
+  getRequestedFriendsList() {
+    getRequestedFriends()
+      .then((data) => {
+        const friendList = data.map((friend) => {
+          friend.pending = true;
+          return friend;
+        })
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(friendList),
+          searching: false,
+          pendingFriend: true
+        });
+      })
+      .catch(err => console.error('NO SEARACH', err));
+  };
 
   render() {
     const { loadingFriends, dataSource } = this.state;
@@ -81,7 +78,7 @@ export class Friends extends Component {
         <FriendSearch giveBackFriend={this.handleFriendSearch}/>
         { !loadingFriends && <FriendList friends={dataSource} /> }
 
-        <FriendsButtons />
+        <FriendsButtons getRequestedFriendsList={this.getRequestedFriendsList} getFriends={this.loadFriends}/>
 
       </View>
     );

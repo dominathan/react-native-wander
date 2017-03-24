@@ -4,7 +4,7 @@ import { Icon } from 'react-native-elements';
 import CheckBox from 'react-native-checkbox';
 import { Actions } from 'react-native-router-flux';
 
-import { addFriend } from '../../services/apiActions';
+import { addFriend, acceptFriend, declineFriend } from '../../services/apiActions';
 //
 export class FriendDetail extends Component {
   constructor(props) {
@@ -14,6 +14,8 @@ export class FriendDetail extends Component {
     };
 
     this.addFriendToDatabase = this.addFriendToDatabase.bind(this);
+    this.denyFriendRequest = this.denyFriendRequest.bind(this);
+    this.acceptFriendRequest = this.acceptFriendRequest.bind(this);
   }
 
   addFriendToDatabase(friend) {
@@ -24,6 +26,20 @@ export class FriendDetail extends Component {
 
   goToProfile(friend) {
     Actions.profile({person: friend});
+  }
+
+  acceptFriendRequest(friend) {
+    console.log("ACCEPT FRIEND", friend)
+    acceptFriend(friend)
+      .then((yay) => console.log("ACCEPTED", yay))
+      .catch(err => console.log('nOOOOO ', err))
+  }
+
+  denyFriendRequest(friend) {
+    console.log("DENIED", friend)
+    declineFriend(friend)
+      .then((yay) => console.log("DECLINE", yay))
+      .catch(err => console.log('nOOOOO ', err))
   }
 
   renderCheckBox(friend) {
@@ -52,12 +68,28 @@ export class FriendDetail extends Component {
               {`${friend.first_name} ${friend.last_name}`}
             </Text>
           </TouchableOpacity>
-          {friend.search &&
-            <View style={styles.addFriend}><Icon
-            name='add'
-            color='#4296CC'
-            onPress={() => this.addFriendToDatabase(friend)}
-            /></View>
+          {
+            friend.search &&
+            <View style={styles.addFriend}>
+              <Icon
+              name='add'
+              color='#4296CC'
+              onPress={() => this.addFriendToDatabase(friend)} />
+            </View>
+          }
+
+          {
+            friend.pending &&
+            <View style={styles.acceptFriend}>
+            <Icon
+              name='x'
+              color='red'
+              onPress={() => this.denyFriendRequest(friend)} />
+              <Icon
+              name='add'
+              color="#4296CC"
+              onPress={() => this.acceptFriendRequest(friend)} />
+            </View>
           }
 
           { this.props.isGroup && this.renderCheckBox(friend) }
@@ -73,7 +105,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 10,
     marginTop: 7,
-    marginBottom: 5
+    marginBottom: 5,
+    alignItems: 'stretch',
+    justifyContent: 'space-between'
   },
   photo: {
     height: 40,
@@ -81,10 +115,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   textContainer: {
-    justifyContent: 'center',
+    flex: 1,
     marginLeft: 5,
     marginTop: 10,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignSelf: 'flex-start'
   },
   text: {
     marginLeft: 8,
@@ -100,5 +135,9 @@ const styles = StyleSheet.create({
     position: 'relative',
     bottom: 0,
     left: 150,
+  },
+  acceptFriend: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
   }
 });
