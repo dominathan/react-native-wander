@@ -54,8 +54,10 @@ const styles = StyleSheet.create({
     height: 65
   },
   text: {
+    // flex: 1,
     marginLeft: 14,
     fontSize: 14,
+    flexWrap: 'wrap'
   },
   photo: {
     height: 40,
@@ -63,7 +65,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   textContainer: {
-    flexDirection: 'column'
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
   },
   bold: {
     fontWeight: '600'
@@ -74,7 +78,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E8E8E',
   },
   textComment: {
+    // flex: 1,
     marginLeft: 14,
-    fontWeight: '100'
+    fontWeight: '100',
+    flexWrap: 'wrap'
   }
 });

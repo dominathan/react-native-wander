@@ -138,29 +138,28 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     height: 45,
     borderBottomWidth: 0.4,
-    borderBottomColor: '#8D8F90',
+    borderBottomColor: '#8D8F90'
   },
   filters: {
     marginRight: 10,
     marginLeft: 15,
     alignSelf: 'center',
-    color: '#8D8F90',
-    paddingTop: 12
+    color: '#8D8F90'
   },
   selectedFilter: {
     color: '#4296CC',
     borderBottomWidth: 1,
     borderBottomColor: '#4296CC',
-    paddingTop: 12,
+    alignSelf: 'center',
     marginRight: 10,
-    marginLeft: 15,
+    marginLeft: 15
   },
   selectedFilterButton: {
     color: '#4296CC',
     borderBottomWidth: 1,
     borderBottomColor: '#4296CC',
     marginRight: 10,
-    marginLeft: 25,
+    marginLeft: 25
   },
   filterButton: {
     alignSelf: 'center',
@@ -184,6 +183,10 @@ const styles = StyleSheet.create({
     marginLeft: 80,
     alignSelf: 'flex-start',
     paddingTop: 15
+  },
+  privatePress: {
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   profileDetailsContainer: {
     flex: 1,
