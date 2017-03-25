@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     height: 65
   },
   text: {
-    // flex: 1,
     marginLeft: 14,
     fontSize: 14,
     flexWrap: 'wrap'
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E8E8E',
   },
   textComment: {
-    // flex: 1,
     marginLeft: 14,
     fontWeight: '100',
     flexWrap: 'wrap'
