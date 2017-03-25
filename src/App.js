@@ -28,6 +28,10 @@ class App extends Component {
     };
   }
 
+  setLogin(val) {
+    this.setState({ isLoggedIn: val });
+  }
+
   componentWillMount() {
     AsyncStorage.getItem('token').then(token => {
       if (token) {
@@ -42,6 +46,7 @@ class App extends Component {
   render() {
       return (
           <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }}>
+          { this.state.isLoggedIn &&
             <Scene key='drawer' component={SimpleDrawer} >
               <Scene key='main' tabs={false}>
                 <Scene key="home" component={Home} title="Home" />
@@ -57,6 +62,13 @@ class App extends Component {
                 <Scene key='searchGroup' component={GroupSearch} title="Search for Groups" />
               </Scene>
             </Scene>
+          }
+          {
+            !this.state.isLoggedIn && 
+            <Scene key='main' tabs={false}>
+              <Scene key="login" component={Login} title="Login" />
+            </Scene>
+          }
           </Router>
       );
     }
