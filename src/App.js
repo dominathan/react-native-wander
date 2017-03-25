@@ -47,7 +47,7 @@ class App extends Component {
                 <Scene key="home" component={Home} title="Home" />
                 <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
                 <Scene key="friends" component={Friends} title="Friends" />
-                <Scene key="login" component={Login} title="Login" initial />
+                <Scene key="login" component={Login} title="Login" />
                 <Scene key="notifications" component={Notifications} title="Notifications" />
                 <Scene key="settings" component={Settings} title="Settings" />
                 <Scene key="help" component={Help} title="Help" />
