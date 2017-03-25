@@ -8,6 +8,7 @@ const TabViewHeader = (props) => {
     const { imageViewStyle,
             profileImageStyle,
             textStyle,
+            textStyleEmail,
             textViewStyle,
             viewStyle
     } = styles;
@@ -25,7 +26,7 @@ const TabViewHeader = (props) => {
             </View>
             <View style={textViewStyle}>
                 <Text style={textStyle}>{props.user.first_name} {props.user.last_name}</Text>
-                <Text style={textStyle}>{props.user.email}</Text>
+                <Text style={textStyleEmail}>{props.user.email}</Text>
             </View>
         </View>
       </TouchableOpacity>
@@ -47,6 +48,10 @@ const styles = {
     },
     textStyle: {
         fontSize: 16,
+        color: '#8D8F90'
+    },
+    textStyleEmail: {
+        fontSize: 12,
         color: '#8D8F90'
     },
     textViewStyle: {
