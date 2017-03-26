@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { TextInput, View, ListView, ScrollView, Image, Text, Dimensions, TouchableHighlight,
   TouchableWithoutFeedback, Platform, ActivityIndicator, PixelRatio, AsyncStorage } from 'react-native';
 import Qs from 'qs';
-import { addPlaceToFavorite } from '../services/apiActions';
+import { addPlaceToFavorite } from '../../services/apiActions';
 
 const WINDOW = Dimensions.get('window');
 

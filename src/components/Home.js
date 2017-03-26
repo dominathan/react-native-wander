@@ -34,7 +34,7 @@ export class Home extends Component {
     this.globalFilter = this.globalFilter.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.watchID = navigator.geolocation.watchPosition((position) => {
       let region = new MapView.AnimatedRegion({
           latitude: position.coords.latitude,

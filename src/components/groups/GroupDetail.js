@@ -36,9 +36,13 @@ export class GroupDetail extends Component {
         { group.privateGroup && <Icon name='lock' color='#8E8E8E' />}
 
         <View style={styles.textContainer}>
-          <Text style={styles.text}>
-            {`${group.name}`}
-          </Text>
+          <TouchableOpacity onPress={() => Actions.groupProfile({group: group})}>
+            <Text style={styles.text}>
+              {`${group.name}`}
+            </Text>
+          </TouchableOpacity>
+
+
           <TouchableOpacity>
 
           {

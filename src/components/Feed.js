@@ -7,7 +7,6 @@ export class Feed extends Component {
     super(props);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows(props.feed),
       feed: ds.cloneWithRows(props.feed)
     };
     this.renderFeed = this.renderFeed.bind(this);

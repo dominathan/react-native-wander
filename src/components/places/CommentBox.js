@@ -3,7 +3,7 @@ import { TextInput, View, Text, AsyncStorage, TouchableOpacity } from 'react-nat
 import { Icon, Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
-import { addPlaceToFavorite } from '../services/apiActions';
+import { addPlaceToFavorite } from '../../services/apiActions';
 
 // Make a Component
 export class CommentBox extends Component {
@@ -26,12 +26,11 @@ export class CommentBox extends Component {
       lng: place.geometry.location.lng,
       google_id: place.id,
       google_place_id: place.place_id,
-      comment: this.state.text,
       favorite: this.state.favorite,
       city: place.address_components[3].long_name,
-      country: place.address_components[6].long_name
+      country: place.address_components[6].long_name,
     };
-    this.saveChosenPlaceAsFavorite(parsedPlace);
+    this.saveChosenPlaceAsFavorite(parsedPlace, this.props.group);
   }
 
   handleTextChange(text) {
@@ -44,21 +43,24 @@ export class CommentBox extends Component {
     });
   }
 
-  saveChosenPlaceAsFavorite(place) {
+  saveChosenPlaceAsFavorite(place, group) {
+    console.log("PLACE BEING SAVED", place)
+    console.log("MAYBE GROUP?", group)
     const { favorite, text } = this.state;
     AsyncStorage.getItem('user', (err, user) => {
       if (err) {
         return err;
       }
-      addPlaceToFavorite({ place: place, user: JSON.parse(user), comment: text, favorite: favorite })
-        .then((res) => Actions.home())
+      addPlaceToFavorite({ place: place, user: JSON.parse(user), comment: text, favorite: favorite, group: group })
+        .then((res) => {
+          place.group ? Actions.groupProfile({group: group}) : Actions.home();
+        })
         .catch((error) => console.log('Failed Saving Place: ', error));
     });
   }
 
   render() {
     const {place} = this.props
-    console.log("PLACE", place);
     return (
       <View style={styles.container}>
         <View style={styles.placeToAdd}>
