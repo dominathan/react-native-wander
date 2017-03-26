@@ -17,12 +17,11 @@ import { getMyGroups, getPublicGroups, getPrivateGroups } from '../../services/a
 export class Group extends Component {
 
   constructor(props) {
-    console.log("GROUP PROPS", props)
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     super(props);
     this.state = {
-      groups: ds.cloneWithRows(['row1', 'row2']),
-      selectedFilter: 'myGroups'
+      groups: ds.cloneWithRows([]),
+      selectedFilter: 'myGroups',
     };
 
     this.createGroupScreen = this.createGroupScreen.bind(this);
@@ -36,9 +35,10 @@ export class Group extends Component {
     getMyGroups()
       .then((data) => {
         const groups = data.map((group) => {
-          group.myGroup = true;
-          return group
-        })
+          group.group.myGroup = true;
+          group.group.memberCount = group.users.length
+          return group.group
+        });
         this.setState({groups: this.state.groups.cloneWithRows(groups)})
       })
       .catch((err) => console.warn("FUCK BALLS", err))
@@ -48,9 +48,10 @@ export class Group extends Component {
     getPublicGroups()
     .then((data) => {
       const groups = data.map((group) => {
-        group.publicGroup = true;
-        return group
-      })
+        group.group.publicGroup = true;
+        group.group.memberCount = group.users.length
+        return group.group
+      });
       this.setState({groups: this.state.groups.cloneWithRows(groups)})
     })
     .catch((err) => console.warn("FUCK BALLS", err))
@@ -60,9 +61,10 @@ export class Group extends Component {
     getPrivateGroups()
     .then((data) => {
       const groups = data.map((group) => {
-        group.privateGroup = true;
-        return group
-      })
+        group.group.privateGroup = true;
+        group.group.memberCount = group.users.length
+        return group.group
+      });
       this.setState({groups: this.state.groups.cloneWithRows(groups)})
     })
     .catch((err) => console.warn("FUCK BALLS", err))
@@ -95,7 +97,7 @@ export class Group extends Component {
     const { groups, searching } = this.state;
     return (
       <View style={styles.container}>
-      
+
         <View style={styles.publicPrivateContainer}>
           <TouchableOpacity style={styles.privatePress} onPress={() => this.selectedFilterChange('myGroups')}>
             <Text style={this.state.selectedFilter == 'myGroups' ? styles.selectedFilter : styles.filters}>YOUR GROUPS</Text>

@@ -28,7 +28,7 @@ export class GroupDetail extends Component {
   }
 
   render() {
-    const group = this.props.group;
+    const { group } = this.props;
     return (
       <View style={styles.groupItem}>
         { group.myGroup && <Icon name='group' color='#8E8E8E' /> }
@@ -40,6 +40,10 @@ export class GroupDetail extends Component {
             <Text style={styles.text}>
               {`${group.name}`}
             </Text>
+            <Text style={styles.memberCount}>
+              {`${group.memberCount} Members` }
+            </Text>
+
           </TouchableOpacity>
 
 
@@ -95,4 +99,9 @@ const styles = StyleSheet.create({
     color: '#4296CC',
     fontWeight: '500'
   },
+  memberCount: {
+    color: '#8D8F90',
+    fontSize: 12,
+    paddingLeft: 10
+  }
 });

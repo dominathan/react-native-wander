@@ -44,8 +44,6 @@ export class CommentBox extends Component {
   }
 
   saveChosenPlaceAsFavorite(place, group) {
-    console.log("PLACE BEING SAVED", place)
-    console.log("MAYBE GROUP?", group)
     const { favorite, text } = this.state;
     AsyncStorage.getItem('user', (err, user) => {
       if (err) {
