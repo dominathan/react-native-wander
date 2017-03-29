@@ -34,7 +34,7 @@ export class Home extends Component {
     this.globalFilter = this.globalFilter.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.watchID = navigator.geolocation.watchPosition((position) => {
       let region = new MapView.AnimatedRegion({
           latitude: position.coords.latitude,
@@ -113,7 +113,6 @@ export class Home extends Component {
 
   render() {
     const { feedReady, region, feed, markers } = this.state;
-
     return (
       <View style={styles.container}>
         {region && <Map onRegionChange={this.onRegionChange} region={this.state.region} markers={markers}/>}

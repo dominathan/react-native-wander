@@ -43,6 +43,8 @@ export class Login extends Component {
     loginUser({ user: this.parseProfile(profile) })
       .then(res => {
         AsyncStorage.setItem('user', JSON.stringify(res));
+        console.log(this.props);
+        this.props.setIsLoggedIn(true);
         Actions.home();
       })
       .catch((err) => {

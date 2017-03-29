@@ -15,6 +15,7 @@ export class FriendDetail extends Component {
     this.addFriendToDatabase = this.addFriendToDatabase.bind(this);
     this.denyFriendRequest = this.denyFriendRequest.bind(this);
     this.acceptFriendRequest = this.acceptFriendRequest.bind(this);
+    this.addToGroup = this.addToGroup.bind(this);
   }
 
   addFriendToDatabase(friend) {
@@ -45,13 +46,27 @@ export class FriendDetail extends Component {
     return (
       <CheckBox
         checked={this.state.checked}
-
         onPress={ _ => {
           friend.invited = !this.state.checked
           this.setState({
             checked: !this.state.checked
           })
-          console.log(friend)
+        }}
+
+      />
+    );
+  }
+
+  addToGroup(friend) {
+    return (
+      <CheckBox
+        checked={this.state.checked}
+        onPress={ _ => {
+          friend.invited = !this.state.checked
+          this.setState({
+            checked: !this.state.checked
+          })
+          console.log("ON CHECK", friend)
         }}
 
       />
@@ -94,6 +109,7 @@ export class FriendDetail extends Component {
           }
 
           { this.props.isGroup && this.renderCheckBox(friend) }
+          { friend.isGroup && this.addToGroup(friend) }
         </View>
       </View>
     );

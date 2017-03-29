@@ -77,6 +77,8 @@ const getPublicGroups = () => defaultGet('groups/public');
 const joinPublicGroup = (group) => defaultPost('groups/public', group);
 const joinPrivateGroup = (group) => defaultPost('groups/private', group);
 const searchForGroups = (query) => defaultGet('groups/search', query);
+const getGroupPlaces =  (query) => defaultGet('groups/places', query);
+const addFriendsToGroup = (friendsAndGroup) => defaultPost('groups/friends', friendsAndGroup);
 
 export {
   addPlaceToFavorite,
@@ -99,5 +101,7 @@ export {
   getPrivateGroups,
   joinPublicGroup,
   joinPrivateGroup,
-  searchForGroups
+  searchForGroups,
+  getGroupPlaces,
+  addFriendsToGroup
 };

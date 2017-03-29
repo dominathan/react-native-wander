@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 
-import GOOGLE_API_KEY from '../../config/google';
+import GOOGLE_API_KEY from '../../../config/google';
 import { GooglePlacesAutocomplete } from './GooglePlacesAutocomplete';
 import { CommentBox } from './CommentBox';
 
@@ -13,7 +13,8 @@ export class GooglePlaces extends Component {
     super(props);
     this.state = {
       showCommentAndPhotoBox: false,
-      place: {}
+      place: {},
+      group: this.props.group ? this.props.group : null
     };
     this.handleAddPlace = this.handleAddPlace.bind(this);
   }
@@ -26,7 +27,7 @@ export class GooglePlaces extends Component {
   }
 
   render() {
-    const { showCommentAndPhotoBox, place } = this.state;
+    const { showCommentAndPhotoBox, place, group } = this.state;
 
     return (
       <View style={styles.container}>
@@ -46,7 +47,7 @@ export class GooglePlaces extends Component {
           predefinedPlaces={[charleston]}
           handleAddPlace={this.handleAddPlace}
         />}
-        { showCommentAndPhotoBox && <CommentBox place={place} /> }
+        { showCommentAndPhotoBox && <CommentBox place={place} group={group} /> }
       </View>
     );
   }

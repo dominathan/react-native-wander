@@ -17,7 +17,7 @@ export class GroupSearch extends Component {
     this.state = {
       text: '',
       searching: false,
-      groups: ds.cloneWithRows(['r1','r2']),
+      groups: ds.cloneWithRows([]),
     };
 
     this.handleTextChange = this.handleTextChange.bind(this);
