@@ -16,12 +16,17 @@ const lock = new Auth0Lock({
 export class Login extends Component {
 
   componentDidMount() {
-    this.showLock();
+    if (this.props.getIsLoggedIn()) {
+      console.log('HERE WE ARE');
+      return Actions.home({ type: 'reset' });
+    } else {
+      this.showLock();
+    }
   }
 
   showLock() {
     lock.show({
-      closable: true,
+      closable: false,
       authParams: {
         scope: 'openid email profile'
       }
@@ -43,9 +48,8 @@ export class Login extends Component {
     loginUser({ user: this.parseProfile(profile) })
       .then(res => {
         AsyncStorage.setItem('user', JSON.stringify(res));
-        console.log(this.props);
         this.props.setIsLoggedIn(true);
-        Actions.home();
+        Actions.home({ type: 'reset' });
       })
       .catch((err) => {
         console.log('FUCK BALLS', err);
@@ -63,10 +67,6 @@ export class Login extends Component {
   }
 
   render() {
-    return (
-      <TouchableOpacity onPress={this.showLock}>
-        <Text> Log In </Text>
-      </TouchableOpacity>
-    );
+    return (null);
   }
 }
