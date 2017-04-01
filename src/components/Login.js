@@ -1,6 +1,6 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import Auth0Lock from 'react-native-lock';
 import { Actions } from 'react-native-router-flux';
 
@@ -17,8 +17,7 @@ export class Login extends Component {
 
   componentDidMount() {
     if (this.props.getIsLoggedIn()) {
-      console.log('HERE WE ARE');
-      return Actions.home({ type: 'reset' });
+      Actions.home({ type: 'reset' });
     } else {
       this.showLock();
     }
@@ -35,8 +34,6 @@ export class Login extends Component {
           console.log(err);
           return;
         }
-        console.log("TOKEN BACK? ", token);
-        console.log("PROFILE BACK ", profile);
         AsyncStorage.setItem('token', JSON.stringify(token), () => {
           this.handleLoginSuccess(profile);
         });

@@ -1,8 +1,7 @@
 // 1. Import library to help create a comment.
 import React, { Component } from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import { AsyncStorage, StatusBar, Text, View } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { AsyncStorage, StatusBar } from 'react-native';
 
 import { Home } from './components/Home';
 import SimpleDrawer from './SimpleDrawer';
@@ -47,10 +46,6 @@ class App extends Component {
     this.getIsLoggedIn = this.getIsLoggedIn.bind(this);
   }
 
-  handleAddFriends(state) {
-    Actions.addFriends({ group: state.group });
-  }
-
   getIsLoggedIn() {
     return this.state.isLoggedIn;
   }
@@ -59,9 +54,13 @@ class App extends Component {
     this.setState({ isLoggedIn: val });
   }
 
+  handleAddFriends(state) {
+    Actions.addFriends({ group: state.group });
+  }
+
   render() {
       if (this.state.isLoggedIn === undefined) {
-        return null;
+        return (null);
       } else {
         return (
           <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
