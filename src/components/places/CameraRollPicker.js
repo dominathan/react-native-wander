@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Image, ImagePickerIOS } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
+
 // import { addPlaceToFavorite } from '../../services/apiActions';
 
 // Make a Component

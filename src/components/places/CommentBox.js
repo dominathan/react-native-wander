@@ -6,9 +6,31 @@ import { CameraRollPicker } from './CameraRollPicker';
 
 import { addPlaceToFavorite } from '../../services/apiActions';
 
+const toDataUrl = (url, callback) => {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = function() {
+    const reader = new FileReader();
+    reader.onloadend = function() {
+      callback(reader.result);
+    }
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.send();
+}
+
+// const toDataURL = url => fetch(url)
+//     .then(response => response.blob())
+//     .then(blob => new Promise((resolve, reject) => {
+//       const reader = new FileReader()
+//       reader.onloadend = () => resolve(reader.result)
+//       reader.onerror = reject
+//       reader.readAsDataURL(blob)
+//     }))
+
 // Make a Component
 export class CommentBox extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +38,7 @@ export class CommentBox extends Component {
       favorite: false,
       showPhoto: false,
       image: null,
-      photo: {}
+      photo: {},
     };
     this.savePlace = this.savePlace.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -45,27 +67,28 @@ export class CommentBox extends Component {
 
   pickImage() {
     ImagePickerIOS.openSelectDialog({}, (response) => {
-      const photo = {
-        uri: response,
-        type: 'image/jpeg',
-        name: 'main.jpg'
-      }
-      this.setState({ image: response, photo: photo });
+      toDataUrl(response, (base64) => {
+        const photo = {
+          uri:  base64,
+        };
+        this.setState({ photo: photo })
+      });
+      this.setState({ image: response });
     },
     error => {
       console.error(error);
     })
   }
 
-  toggleFavorite() {
-    this.setState({
-      favorite: !this.state.favorite
-    });
-  }
-
   togglePhoto() {
     this.setState({
       showPhoto: !this.state.showPhoto
+    });
+  }
+
+  toggleFavorite() {
+    this.setState({
+      favorite: !this.state.favorite
     });
   }
 

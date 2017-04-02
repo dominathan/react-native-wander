@@ -11,12 +11,21 @@ const headers = (token) => {
   };
 };
 
+const handleAuthorization = (resp) => {
+  // if (Number(resp.status) >= 400) {
+  //   console.log("FAILURE AUTH?")
+  //   return Actions.login();
+  // }
+  // return resp;
+}
+
 const defaultPost = (subUrl, data) => {
   return new Promise((resolve, reject) => {
     AsyncStorage.getItem('token', (err, token) => {
      if (err) {
        console.log(' NO TOKEN: ', err);
        Actions.login();
+       return
      }
      const parsedToken = JSON.parse(token);
      fetch(`${API_BASE}/${subUrl}`, {
@@ -25,6 +34,7 @@ const defaultPost = (subUrl, data) => {
        body: JSON.stringify(data)
      })
      .then((response) => response.json())
+    //  .then(handleAuthorization)
      .then((apiData) => resolve(apiData))
      .catch((apiErr) => reject(apiErr));
    });
@@ -37,6 +47,7 @@ const defaultGet = (subUrl, params) => {
      if (err) {
        console.log(' NO TOKEN: ', err);
        Actions.login();
+       return
      }
      const parsedToken = JSON.parse(token);
      let url = '';
@@ -50,6 +61,7 @@ const defaultGet = (subUrl, params) => {
        headers: headers(parsedToken)
      })
      .then((response) => response.json())
+    //  .then(handleAuthorization)
      .then((apiData) => resolve(apiData))
      .catch((apiErr) => reject(apiErr));
    });
