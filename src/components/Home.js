@@ -113,7 +113,6 @@ export class Home extends Component {
 
   render() {
     const { feedReady, region, feed, markers } = this.state;
-
     return (
       <View style={styles.container}>
         {region && <Map onRegionChange={this.onRegionChange} region={this.state.region} markers={markers}/>}

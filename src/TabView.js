@@ -81,11 +81,6 @@ const TabView = (props, context) => {
       icon: 'gears'
     },
     {
-      routeCallback: () => { drawer.close(); Actions.login(); },
-      name: 'Login',
-      icon: 'facebook'
-    },
-    {
       routeCallback: () => { drawer.close(); Actions.notifications(); },
       name: 'Notifications',
       icon: 'bell'
