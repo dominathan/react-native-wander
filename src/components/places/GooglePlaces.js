@@ -38,6 +38,8 @@ export class GooglePlaces extends Component {
           currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
           currentLocationLabel="Current location"
           onPress={(data, details) => { // 'details' is provided when fetchDetails = true
+            console.log("DATA: ", data)
+            console.log("DETAILS: ", details)
           }}
           query={{
            // available options: https://developers.google.com/places/web-service/autocomplete

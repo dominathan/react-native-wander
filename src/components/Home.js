@@ -28,6 +28,7 @@ export class Home extends Component {
       lastCall: null
     };
     this.onRegionChange = this.onRegionChange.bind(this);
+    this.getPlaces = this.getPlaces.bind(this);
     this.navigateToAddPlace = this.navigateToAddPlace.bind(this);
     this.filterFriends = this.filterFriends.bind(this);
     this.filterExperts = this.filterExperts.bind(this);
@@ -44,8 +45,11 @@ export class Home extends Component {
       })
       this.state.region = region;
       this.globalFilter();
+      this.getPlaces();
     })
+  }
 
+  getPlaces() {
     getPlaces()
       .then((data) => {
         this.setState({

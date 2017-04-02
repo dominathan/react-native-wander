@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { TextInput, View, Text, AsyncStorage, TouchableOpacity } from 'react-native';
+import { TextInput, View, Text, AsyncStorage, TouchableOpacity, CameraRoll, StyleSheet, ImagePickerIOS } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
+import { CameraRollPicker } from './CameraRollPicker';
 
 import { addPlaceToFavorite } from '../../services/apiActions';
 
@@ -12,11 +13,16 @@ export class CommentBox extends Component {
     super(props);
     this.state = {
       text: '',
-      favorite: false
+      favorite: false,
+      showPhoto: false,
+      image: null,
+      photo: {}
     };
     this.savePlace = this.savePlace.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
+    this.togglePhoto = this.togglePhoto.bind(this);
+    this.pickImage = this.pickImage.bind(this);
   }
 
   savePlace(place) {
@@ -37,19 +43,39 @@ export class CommentBox extends Component {
     this.setState({ text });
   }
 
+  pickImage() {
+    ImagePickerIOS.openSelectDialog({}, (response) => {
+      const photo = {
+        uri: response,
+        type: 'image/jpeg',
+        name: 'main.jpg'
+      }
+      this.setState({ image: response, photo: photo });
+    },
+    error => {
+      console.error(error);
+    })
+  }
+
   toggleFavorite() {
     this.setState({
       favorite: !this.state.favorite
     });
   }
 
+  togglePhoto() {
+    this.setState({
+      showPhoto: !this.state.showPhoto
+    });
+  }
+
   saveChosenPlaceAsFavorite(place, group) {
-    const { favorite, text } = this.state;
+    const { favorite, text, photo } = this.state;
     AsyncStorage.getItem('user', (err, user) => {
       if (err) {
         return err;
       }
-      addPlaceToFavorite({ place: place, user: JSON.parse(user), comment: text, favorite: favorite, group: group })
+      addPlaceToFavorite({ place: place, user: JSON.parse(user), comment: text, favorite: favorite, group: group, image: photo })
         .then((res) => {
           place.group ? Actions.groupProfile({group: group}) : Actions.home();
         })
@@ -58,7 +84,8 @@ export class CommentBox extends Component {
   }
 
   render() {
-    const {place} = this.props
+    const { place } = this.props
+    const { showPhoto, image } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.placeToAdd}>
@@ -79,7 +106,7 @@ export class CommentBox extends Component {
             }
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.addPhotoContainer}>
+        <TouchableOpacity onPress={this.togglePhoto} style={styles.addPhotoContainer}>
           <Icon
             name='add-circle-outline'
             color='#4296CC'
@@ -102,6 +129,9 @@ export class CommentBox extends Component {
          backgroundColor='#4296CC'
          onPress={() => this.savePlace(place)}
          />
+
+         { showPhoto && <CameraRollPicker pickImage={this.pickImage} image={image}/>}
+
       </View>
     );
   }
@@ -156,8 +186,5 @@ const styles = {
   commentContainer: {
     height: 200,
     alignItems: 'flex-start',
-  },
-  buttonStyle: {
-
   }
 };

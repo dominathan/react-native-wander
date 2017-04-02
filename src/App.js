@@ -41,15 +41,15 @@ class App extends Component {
           <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }}>
             <Scene key='drawer' component={SimpleDrawer} >
               <Scene key='main' tabs={false}>
-                <Scene key="home" component={Home} title="Home" />
-                <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
+                <Scene key="home" component={Home} title="Home" initial />
+                <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place"  />
                 <Scene key="friends" component={Friends} title="Friends" />
-                <Scene key="login" component={Login} title="Login" />
+                <Scene key="login" component={Login} title="Login"  />
                 <Scene key="notifications" component={Notifications} title="Notifications" />
                 <Scene key="settings" component={Settings} title="Settings" />
                 <Scene key="help" component={Help} title="Help" />
                 <Scene key="profile" component={Profile} title="Profile" />
-                <Scene key="groups" component={Group} title="Groups" onRight={() => Actions.searchGroup()} rightTitle="Search" titleStyle={{ color: "#FFF"}} initial />
+                <Scene key="groups" component={Group} title="Groups" onRight={() => Actions.searchGroup()} rightTitle="Search" titleStyle={{ color: "#FFF"}} />
                 <Scene key="createGroup" component={CreateGroup} title="Create a Group" />
                 <Scene key='searchGroup' component={GroupSearch} title="Search for Groups" />
                 <Scene key='groupProfile' component={GroupProfile} title="Group" onRight={(state) => this.handleAddFriends(state)} rightTitle="+ Friend" />
