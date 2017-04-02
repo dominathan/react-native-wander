@@ -1,6 +1,6 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import Auth0Lock from 'react-native-lock';
 import { Actions } from 'react-native-router-flux';
 
@@ -16,12 +16,16 @@ const lock = new Auth0Lock({
 export class Login extends Component {
 
   componentDidMount() {
-    this.showLock();
+    if (this.props.getIsLoggedIn()) {
+      Actions.home({ type: 'reset' });
+    } else {
+      this.showLock();
+    }
   }
 
   showLock() {
     lock.show({
-      closable: true,
+      closable: false,
       authParams: {
         scope: 'openid email profile'
       }
@@ -30,8 +34,6 @@ export class Login extends Component {
           console.log(err);
           return;
         }
-        console.log("TOKEN BACK? ", token);
-        console.log("PROFILE BACK ", profile);
         AsyncStorage.setItem('token', JSON.stringify(token), () => {
           this.handleLoginSuccess(profile);
         });
@@ -41,13 +43,14 @@ export class Login extends Component {
 
   handleLoginSuccess(profile) {
     loginUser({ user: this.parseProfile(profile) })
-    .then((res) => {
-      AsyncStorage.setItem('user', JSON.stringify(res));
-      Actions.home();
-    })
-    .catch((err) => {
-      console.log('FUCK BALLS', err);
-    });
+      .then(res => {
+        AsyncStorage.setItem('user', JSON.stringify(res));
+        this.props.setIsLoggedIn(true);
+        Actions.home({ type: 'reset' });
+      })
+      .catch((err) => {
+        console.log('FUCK BALLS', err);
+      });
   }
 
   parseProfile(profile) {
@@ -61,10 +64,6 @@ export class Login extends Component {
   }
 
   render() {
-    return (
-      <TouchableOpacity onPress={this.showLock}>
-        <Text> Log In </Text>
-      </TouchableOpacity>
-    );
+    return (null);
   }
 }
