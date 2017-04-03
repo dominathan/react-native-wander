@@ -1,6 +1,6 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, ListView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import MapView from 'react-native-maps';
 import { Icon } from 'react-native-elements';
@@ -8,13 +8,17 @@ import { Icon } from 'react-native-elements';
 import { getPlaces, getFeed, getFriendFeed, getExpertFeed } from '../services/apiActions';
 import { Feed } from './Feed';
 import { Map } from './map/Map';
+import { PlaceList } from './places/PlaceList';
 
 export class Home extends Component {
 
   constructor(props) {
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
     super(props);
     this.state = {
       markers: [],
+      places: ds.cloneWithRows([]),
       feed: null,
       feedReady: false,
       selectedFilter: 'feed',
@@ -53,7 +57,8 @@ export class Home extends Component {
     getPlaces()
       .then((data) => {
         this.setState({
-          markers: data
+          markers: data,
+          places: this.state.places.cloneWithRows(data)
         });
       })
       .catch((err) => console.log('fuck balls: ', err));
@@ -116,7 +121,7 @@ export class Home extends Component {
   }
 
   render() {
-    const { feedReady, region, feed, markers } = this.state;
+    const { feedReady, region, feed, markers, selectedFilter, places } = this.state;
     return (
       <View style={styles.container}>
         {region && <Map onRegionChange={this.onRegionChange} region={this.state.region} markers={markers}/>}
@@ -132,8 +137,8 @@ export class Home extends Component {
             <Text style={this.state.selectedFilter === 'filter' ? styles.selectedFilterButton : styles.filterButtonText}>FILTER</Text>
           </TouchableOpacity>
         </View>
-        {feedReady && <Feed feed={feed} />}
-
+        {feedReady && selectedFilter === 'feed' && <Feed feed={feed} />}
+        {feedReady && selectedFilter === 'top' && <PlaceList places={places} />}
         <TouchableOpacity style={styles.addPlaceButton}>
           <Icon
             raised

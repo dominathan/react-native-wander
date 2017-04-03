@@ -69,11 +69,11 @@ class App extends Component {
           <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
             <Scene key='drawer' component={SimpleDrawer} >
               <Scene key='main' tabs={false}>
-                <Scene key='launch'>
+                <Scene key='launch' initial>
                   <Scene key='login' component={Login} title="Login" hideNavBar />
                 </Scene>
                 <Scene key="home" component={Home} title="Home" />
-                <Scene key="myPlaces" component={MyPlaces} title="Places" initial />
+                <Scene key="myPlaces" component={MyPlaces} title="Places" />
                 <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
                 <Scene key="friends" component={Friends} title="Friends" />
                 <Scene key="notifications" component={Notifications} title="Notifications" />

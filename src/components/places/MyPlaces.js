@@ -68,8 +68,6 @@ export class MyPlaces extends Component {
           places: this.state.places.cloneWithRows(data.places),
           placeFeedReady: true
         });
-        console.log("FAVORITES", data.favorites)
-        console.log("PLACE", data.places)
       })
       .catch((err) => console.log('fuck balls: ', err));
   }
