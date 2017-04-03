@@ -6,7 +6,10 @@ import { AsyncStorage, StatusBar } from 'react-native';
 import { Home } from './components/Home';
 import SimpleDrawer from './SimpleDrawer';
 
+// Places
 import { GooglePlaces } from './components/places/GooglePlaces';
+import { MyPlaces } from './components/places/MyPlaces';
+
 import { Login } from './components/Login';
 import { Friends } from './components/friends/Friends';
 import { Notifications } from './components/Notifications';
@@ -66,10 +69,11 @@ class App extends Component {
           <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
             <Scene key='drawer' component={SimpleDrawer} >
               <Scene key='main' tabs={false}>
-                <Scene key='launch' initial>
+                <Scene key='launch'>
                   <Scene key='login' component={Login} title="Login" hideNavBar />
                 </Scene>
                 <Scene key="home" component={Home} title="Home" />
+                <Scene key="myPlaces" component={MyPlaces} title="Places" initial />
                 <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
                 <Scene key="friends" component={Friends} title="Friends" />
                 <Scene key="notifications" component={Notifications} title="Notifications" />

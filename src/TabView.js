@@ -71,7 +71,7 @@ const TabView = (props, context) => {
       icon: 'gears'
     },
     {
-      routeCallback: () => { drawer.close(); Actions.googlePlaces(); },
+      routeCallback: () => { drawer.close(); Actions.myPlaces(); },
       name: 'My Places',
       icon: 'map'
     },

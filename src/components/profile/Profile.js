@@ -41,7 +41,7 @@ export class Profile extends Component {
   feed() {
     getUserFeed()
       .then(feed => {
-        this.setState({ display: feed, 
+        this.setState({ display: feed,
         feed,
         feedType: 'feed' });
       });
@@ -114,8 +114,6 @@ export class Profile extends Component {
                 <Text style={selectedFilter === 'favoritesList' ? styles.selectedFilter : styles.filters}>FAVORITES</Text>
               </TouchableOpacity>
             </View>
-            {(feedType === 'feed') && <Feed feed={feed} />}
-            {(feedType === 'favoritesList') && <Feed feed={favoritesList} />}
           </View>
         </View>
       </View>

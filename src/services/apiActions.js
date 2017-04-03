@@ -71,6 +71,7 @@ const defaultGet = (subUrl, params) => {
 const addPlaceToFavorite = (place) => defaultPost('places', place);
 const loginUser = (userProfile) => defaultPost('users', userProfile);
 const getPlaces = () => defaultGet('places');
+const getPlace = (place) => defaultGet(`places/${place.id}`)
 const getUserPlaces = (user) => defaultPost('places/user', user);
 const getFeed = () => defaultGet('feed');
 const getUserFeed = () => defaultGet('feed/users');
@@ -98,6 +99,7 @@ export {
   getUserFeed,
   getUserPlaces,
   getPlaces,
+  getPlace,
   getFeed,
   getFriends,
   searchForFriends,
