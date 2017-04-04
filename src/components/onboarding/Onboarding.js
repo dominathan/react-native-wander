@@ -6,13 +6,13 @@ export class Onboarding extends Component {
 
     constructor(props) {
         super(props);
-        state: {
+        this.state = {
             activeSlide: 1
-        }
+        };
     }
 
     setActiveSlide() {
-        
+
     }
 
     render() {
