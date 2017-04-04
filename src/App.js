@@ -11,6 +11,7 @@ import { GooglePlaces } from './components/places/GooglePlaces';
 import { MyPlaces } from './components/places/MyPlaces';
 
 import { Login } from './components/Login';
+import { Onboarding } from './components/onboarding';
 import { Friends } from './components/friends/Friends';
 import { Notifications } from './components/Notifications';
 import { Settings } from './components/Settings';
@@ -85,6 +86,7 @@ class App extends Component {
                 <Scene key='searchGroup' component={GroupSearch} title="Search for Groups" />
                 <Scene key='groupProfile' component={GroupProfile} title="Group" onRight={(state) => this.handleAddFriends(state)} rightTitle="+ Friend" />
                 <Scene key='addFriends' component={AddFriends} title='Add to Group' />
+                <Scene key='onboarding' component={Onboarding} title='Onboarding' />
               </Scene>
             </Scene>
           </Router>
