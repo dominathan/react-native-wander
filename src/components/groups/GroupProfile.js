@@ -1,6 +1,6 @@
 // https://github.com/FaridSafi/react-native-google-places-autocomplete
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, ListView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import MapView from 'react-native-maps';
 import { Icon } from 'react-native-elements';
@@ -8,14 +8,18 @@ import { Icon } from 'react-native-elements';
 import { getGroupPlaces } from '../../services/apiActions';
 import { Feed } from '../Feed';
 import { Map } from '../map/Map';
+import { PlaceList } from '../places/PlaceList';
 
 export class GroupProfile extends Component {
 
   constructor(props) {
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
     super(props);
     this.state = {
       markers: [],
       feed: [],
+      places: ds.cloneWithRows([]),
       feedReady: false,
       selectedFilter: 'feed',
       region: new MapView.AnimatedRegion({
@@ -43,7 +47,7 @@ export class GroupProfile extends Component {
       this.state.region = region;
     });
     const group = this.props.group;
-    this.getGroupPlaces(group.name)
+    this.getGroupPlaces(group.name);
   }
 
   getGroupPlaces(groupName) {
@@ -53,7 +57,8 @@ export class GroupProfile extends Component {
           feed: data.feed,
           users: data.users,
           feedReady: true,
-          markers: data.places
+          markers: data.places,
+          places: this.state.places.cloneWithRows(data.places)
         })
       })
       .catch((err) => console.log("I AM A FAILURE", err))
@@ -78,7 +83,7 @@ export class GroupProfile extends Component {
   }
 
   render() {
-    const { feedReady, region, feed, markers } = this.state;
+    const { selectedFilter, feedReady, region, feed, markers, places } = this.state;
 
     return (
       <View style={styles.container}>
@@ -92,7 +97,8 @@ export class GroupProfile extends Component {
             <Text style={this.state.selectedFilter === 'top' ? styles.selectedFilter : styles.filters}>TOP</Text>
           </TouchableOpacity>
         </View>
-        {feedReady && <Feed feed={feed} />}
+        {feedReady && selectedFilter === 'feed' && <Feed feed={feed} />}
+        {feedReady && selectedFilter === 'top' && <PlaceList places={places} />}
 
         <TouchableOpacity style={styles.addPlaceButton}>
           <Icon
