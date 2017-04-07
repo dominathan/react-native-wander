@@ -11,14 +11,6 @@ const headers = (token) => {
   };
 };
 
-const handleAuthorization = (resp) => {
-  // if (Number(resp.status) >= 400) {
-  //   console.log("FAILURE AUTH?")
-  //   return Actions.login();
-  // }
-  // return resp;
-}
-
 const defaultPost = (subUrl, data) => {
   return new Promise((resolve, reject) => {
     AsyncStorage.getItem('token', (err, token) => {
@@ -34,7 +26,6 @@ const defaultPost = (subUrl, data) => {
        body: JSON.stringify(data)
      })
      .then((response) => response.json())
-    //  .then(handleAuthorization)
      .then((apiData) => resolve(apiData))
      .catch((apiErr) => reject(apiErr));
    });
@@ -61,7 +52,6 @@ const defaultGet = (subUrl, params) => {
        headers: headers(parsedToken)
      })
      .then((response) => response.json())
-    //  .then(handleAuthorization)
      .then((apiData) => resolve(apiData))
      .catch((apiErr) => reject(apiErr));
    });
@@ -92,6 +82,8 @@ const joinPrivateGroup = (group) => defaultPost('groups/private', group);
 const searchForGroups = (query) => defaultGet('groups/search', query);
 const getGroupPlaces =  (query) => defaultGet('groups/places', query);
 const addFriendsToGroup = (friendsAndGroup) => defaultPost('groups/friends', friendsAndGroup);
+const getNotifications = () => defaultGet('notifications');
+const acceptJoinGroupRequest = (friendAndGroup) => defaultPost('groups/accept', friendAndGroup);
 
 export {
   addPlaceToFavorite,
@@ -117,5 +109,7 @@ export {
   joinPrivateGroup,
   searchForGroups,
   getGroupPlaces,
-  addFriendsToGroup
+  addFriendsToGroup,
+  getNotifications,
+  acceptJoinGroupRequest
 };

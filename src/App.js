@@ -12,7 +12,7 @@ import { MyPlaces } from './components/places/MyPlaces';
 
 import { Login } from './components/Login';
 import { Friends } from './components/friends/Friends';
-import { Notifications } from './components/Notifications';
+import { Notifications } from './components/notifications/Notifications';
 import { Settings } from './components/Settings';
 import { Help } from './components/Help';
 import { Profile } from './components/profile/Profile';
@@ -69,14 +69,14 @@ class App extends Component {
           <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
             <Scene key='drawer' component={SimpleDrawer} >
               <Scene key='main' tabs={false}>
-                <Scene key='launch' initial>
-                  <Scene key='login' component={Login} title="Login" hideNavBar />
+                <Scene key='launch' >
+                  <Scene key='login' component={Login} title="Login" hideNavBar initial />
                 </Scene>
                 <Scene key="home" component={Home} title="Home" />
                 <Scene key="myPlaces" component={MyPlaces} title="Places" />
                 <Scene key="googlePlaces" component={GooglePlaces} title="Add a Place" />
                 <Scene key="friends" component={Friends} title="Friends" />
-                <Scene key="notifications" component={Notifications} title="Notifications" />
+                <Scene key="notifications" component={Notifications} title="Notifications"  />
                 <Scene key="settings" component={Settings} title="Settings" />
                 <Scene key="help" component={Help} title="Help" />
                 <Scene key="profile" component={Profile} title="Profile" />
