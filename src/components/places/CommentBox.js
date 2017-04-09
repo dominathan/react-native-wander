@@ -57,6 +57,7 @@ export class CommentBox extends Component {
       favorite: this.state.favorite,
       city: place.address_components[3].long_name,
       country: place.address_components[6].long_name,
+      data: place
     };
     this.saveChosenPlaceAsFavorite(parsedPlace, this.props.group);
   }
@@ -94,20 +95,16 @@ export class CommentBox extends Component {
 
   saveChosenPlaceAsFavorite(place, group) {
     const { favorite, text, photo } = this.state;
-    AsyncStorage.getItem('user', (err, user) => {
-      if (err) {
-        return err;
-      }
-      addPlaceToFavorite({ place: place, user: JSON.parse(user), comment: text, favorite: favorite, group: group, image: photo })
-        .then((res) => {
-          place.group ? Actions.groupProfile({group: group}) : Actions.home();
-        })
-        .catch((error) => console.log('Failed Saving Place: ', error));
-    });
+    addPlaceToFavorite({ place: place, comment: text, favorite: favorite, group: group, image: photo })
+      .then((res) => {
+        place.group ? Actions.groupProfile({group: group}) : Actions.home();
+      })
+      .catch((error) => console.log('Failed Saving Place: ', error));
   }
 
   render() {
     const { place } = this.props
+    console.log("THIS IS PLACE", place);
     const { showPhoto, image } = this.state;
     return (
       <View style={styles.container}>
