@@ -15,15 +15,14 @@ export class NotificationDetail extends Component {
   }
 
   acceptJoinGroupRequest(user) {
-    const groupAndUser = JSON.stringify({
+    const groupAndUser = {
       user_id: user.id,
-      group_id: group.id
-    });
-    // need to get group from api
-    acceptJoinGroupRequest(groupAndUser)
-      .then(data => console.log("SUCCESS"))
-      .catch(err => console.log("ERR"))
+      group_id: user.group_id
+    };
 
+    acceptJoinGroupRequest(groupAndUser)
+      .then(data => console.log("SUCCESS", data))
+      .catch(err => console.log("ERR", err))
   }
 
   render() {
