@@ -2,20 +2,14 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 export class OnboardingTile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isActive: this.props.isActive
-        };
-    }
     render() {
         return (
             <View>
                 <View>
-                    <Image src={this.props.image} />
+                    <Image src={require(this.props.tile.image)} />
                 </View>
                 <View>
-                    <Text>{this.props.text}</Text>
+                    <Text>{this.props.tile.text}</Text>
                 </View>
             </View>
         );

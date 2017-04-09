@@ -75,8 +75,6 @@
     [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
         make.top.equalTo(self.view).offset(10);
-        make.left.equalTo(self.view).offset(20);
-        make.right.equalTo(self.view).offset(-20);
     }];
     [boxView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(20);
@@ -111,7 +109,6 @@
                                     }
                             range:phoneRange];
     }
-    self.messageLabel.numberOfLines = 0;
     self.messageLabel.attributedText = attrString;
     self.messageLabel.preferredMaxLayoutWidth = 298;
     self.messageLabel.textAlignment = NSTextAlignmentCenter;

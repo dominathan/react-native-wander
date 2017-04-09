@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 
 export class Help extends Component {
   contact() {
-    email('help@rayka-app.com', null, null, null, null);
+    email('landon@rayka-app.com', null, null, null, null);
   }
 
   render() {
