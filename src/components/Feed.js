@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListView, View, Text, Image, ScrollView, StyleSheet } from 'react-native';
+import { ListView, View, Text, Image, StyleSheet } from 'react-native';
 
 export class Feed extends Component {
 
@@ -32,13 +32,11 @@ export class Feed extends Component {
 
   render() {
     return (
-      <ScrollView>
-        <ListView
-         dataSource={this.state.feed}
-         renderRow={this.renderFeed}
-         renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-        />
-      </ScrollView>
+      <ListView
+       dataSource={this.state.feed}
+       renderRow={this.renderFeed}
+       renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+      />
     );
   }
 }

@@ -18,13 +18,11 @@ export class GroupList extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.scrollView}>
-        <ListView
-         dataSource={this.props.groups}
-         renderRow={this.renderGroups}
-         renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-        />
-      </ScrollView>
+      <ListView style={styles.scrollView}
+       dataSource={this.props.groups}
+       renderRow={this.renderGroups}
+       renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+      />
     );
   }
 }

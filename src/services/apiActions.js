@@ -63,6 +63,7 @@ const loginUser = (userProfile) => defaultPost('users', userProfile);
 const getPlaces = () => defaultGet('places');
 const getPlace = (place) => defaultGet(`places/${place.id}`)
 const getUserPlaces = (user) => defaultPost('places/user', user);
+const getFilterPlaces = (places) => defaultGet('places/types', places)
 const getFeed = () => defaultGet('feed');
 const getUserFeed = () => defaultGet('feed/users');
 const getFriends = () => defaultGet('friends');
@@ -90,6 +91,7 @@ export {
   loginUser,
   getUserFeed,
   getUserPlaces,
+  getFilterPlaces,
   getPlaces,
   getPlace,
   getFeed,

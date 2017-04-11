@@ -5,10 +5,11 @@ import { Actions } from 'react-native-router-flux';
 import MapView from 'react-native-maps';
 import { Icon } from 'react-native-elements';
 
-import { getPlaces, getFeed, getFriendFeed, getExpertFeed } from '../services/apiActions';
+import { getPlaces, getFeed, getFriendFeed, getExpertFeed, getFilterPlaces } from '../services/apiActions';
 import { Feed } from './Feed';
 import { Map } from './map/Map';
 import { PlaceList } from './places/PlaceList';
+import Filter from './places/Filter';
 
 export class Home extends Component {
 
@@ -37,6 +38,7 @@ export class Home extends Component {
     this.filterFriends = this.filterFriends.bind(this);
     this.filterExperts = this.filterExperts.bind(this);
     this.globalFilter = this.globalFilter.bind(this);
+    this.handleFilter = this.handleFilter.bind(this);
   }
 
   componentDidMount() {
@@ -80,6 +82,15 @@ export class Home extends Component {
     this.setState({
       selectedFilter: val
     });
+  }
+
+  handleFilter(type) {
+    const latitude = this.state.region.latitude._value;
+    const longitude = this.state.region.longitude._value;
+    const queryString = `lat=${latitude}&lng=${longitude}&distance=20&type=${type}`
+    getFilterPlaces(queryString)
+    .then(data => this.setState({markers: data}))
+    .catch(err => console.log("ERR FILTER", data))
   }
 
   globalFilter() {
@@ -139,6 +150,7 @@ export class Home extends Component {
         </View>
         {feedReady && selectedFilter === 'feed' && <Feed feed={feed} />}
         {feedReady && selectedFilter === 'top' && <PlaceList places={places} />}
+        {feedReady && selectedFilter === 'filter' && <Filter onPress={this.handleFilter} />}
         <TouchableOpacity style={styles.addPlaceButton}>
           <Icon
             raised

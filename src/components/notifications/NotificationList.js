@@ -18,13 +18,12 @@ export class NotificationList extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.scrollView}>
-        <ListView
-         dataSource={this.props.notifications}
-         renderRow={this.renderNotifications}
-         renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-        />
-      </ScrollView>
+      <ListView
+       style={styles.scrollView}
+       dataSource={this.props.notifications}
+       renderRow={this.renderNotifications}
+       renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+      />
     );
   }
 }
