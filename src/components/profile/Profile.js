@@ -64,7 +64,7 @@ export class Profile extends Component {
   userPlaces() {
     getUserPlaces(this.state.person)
       .then(data => {
-        let list = data.favorites.map(favorite => {
+        const list = data.favorites.map(favorite => {
           return {
             place: {
               name: favorite.name
