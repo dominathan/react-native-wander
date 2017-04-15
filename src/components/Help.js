@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { email } from 'react-native-communications';
-import { Actions, ActionConsts } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 
 export class Help extends Component {
   contact() {

@@ -17,6 +17,7 @@ import { Notifications } from './components/notifications/Notifications';
 import { Settings } from './components/Settings';
 import { Help } from './components/Help';
 import { Profile } from './components/profile/Profile';
+import { ProfileInfo } from './components/profile/ProfileInfo';
 
 // Groups
 import { Group } from './components/groups/Group';
@@ -87,6 +88,7 @@ class App extends Component {
                 <Scene key='groupProfile' component={GroupProfile} title="Group" onRight={(state) => this.handleAddFriends(state)} rightTitle="+ Friend" />
                 <Scene key='addFriends' component={AddFriends} title='Add to Group' />
                 <Scene key='onboarding' component={Onboarding} title='Onboarding' hideNavBar />
+                <Scene key='profileInfo' component={ProfileInfo} title='Profile Info' />
               </Scene>
             </Scene>
           </Router>

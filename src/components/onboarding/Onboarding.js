@@ -52,16 +52,16 @@ export class Onboarding extends Component {
         return (<View style={styles.container}>
             <View style={styles.onboardingContainer}>
                 <OnboardingTile
-                style={styles.tile}
-                tile={this.getActiveSlide()}
+                  style={styles.tile}
+                  tile={this.getActiveSlide()}
                 />
                 <Button
-                buttonStyle={styles.button}
-                raised
-                backgroundColor='#3c95cd'
-                icon={{ name: 'chevron-right', type: 'font-awesome' }}
-                title="Next"
-                onPress={() => { this.advanceSlide() }}
+                  buttonStyle={styles.button}
+                  raised
+                  backgroundColor='#3c95cd'
+                  icon={{ name: 'chevron-right', type: 'font-awesome' }}
+                  title="Next"
+                  onPress={() => { this.advanceSlide() }}
                 />
             </View>
         </View>);
