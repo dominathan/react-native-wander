@@ -67,6 +67,6 @@ export class Settings extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 45
+    marginTop: 43
   }
 });

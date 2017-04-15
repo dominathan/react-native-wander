@@ -11,6 +11,8 @@ export class ProfileInfo extends Component {
     this.setCurrentUser();
   }
 
+  // users/:id PUT route
+
   setCurrentUser() {
     AsyncStorage.getItem('user', (err, user) => {
       this.setState({user: JSON.parse(user).user });
@@ -21,20 +23,35 @@ export class ProfileInfo extends Component {
     if (this.state.user === undefined) {
       return (null);
     } else {
-      const user = this.state.user;
+      let user = this.state.user;
       console.log(user)
       return (
         <View style={styles.container}>
-            <FormLabel>Name</FormLabel>
+            <FormLabel>First Name</FormLabel>
             <FormInput
               onChangeText={(text) => {
-                this.setState({ user.first_name: text })}
-              }
+                user.first_name = text;
+                this.setState({ user: user })
+                console.log('state', this.state.user)
+              }}
               value={user.first_name} />
+            <FormLabel>Last Name</FormLabel>
+            <FormInput
+              onChangeText={(text) => {
+                user.last_name = text;
+                this.setState({ user: user })
+              }}
+              value={user.last_name} />
           { user.expert &&
             <View style={styles.fieldView}>
               <FormLabel>Blog</FormLabel>
-              <FormInput textInputRef={user.blog} />
+              <FormInput
+                onChangeText={(text) => {
+                  user.expert_blog_log = text;
+                  this.setState({ user: user })
+                }}
+                value={user.expert_blog_log}
+              />
             </View>
           }
         </View>
