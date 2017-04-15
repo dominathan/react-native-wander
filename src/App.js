@@ -86,7 +86,7 @@ class App extends Component {
                 <Scene key='searchGroup' component={GroupSearch} title="Search for Groups" />
                 <Scene key='groupProfile' component={GroupProfile} title="Group" onRight={(state) => this.handleAddFriends(state)} rightTitle="+ Friend" />
                 <Scene key='addFriends' component={AddFriends} title='Add to Group' />
-                <Scene key='onboarding' component={Onboarding} title='Onboarding' />
+                <Scene key='onboarding' component={Onboarding} title='Onboarding' hideNavBar />
               </Scene>
             </Scene>
           </Router>

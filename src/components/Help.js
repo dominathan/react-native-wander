@@ -20,6 +20,7 @@ export class Help extends Component {
           onPress={this.contact()}
         />
         <Button
+          buttonStyle={styles.button}
           raised
           backgroundColor='#3c95cd'
           icon={{ name: 'arrows', type: 'font-awesome' }}
@@ -32,6 +33,9 @@ export class Help extends Component {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    marginTop: 15
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

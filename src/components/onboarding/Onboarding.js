@@ -12,15 +12,18 @@ export class Onboarding extends Component {
             slides: [
                 {
                     image: require('./tiles/discover.png'),
-                    text: 'Tired of always asking friends for advice on where to go? Simply scroll through the feed to see the recommendations and favorite places of people you know and trust.'
+                    text: 'Tired of always asking friends for advice on where to go? Simply scroll through the feed to see the recommendations and favorite places of people you know and trust.',
+                    title: 'Discover'
                 },
                 {
                     image: require('./tiles/explore.png'),
-                    text: 'Tired of outdated rankings? Find just the best that the world has to offer from the favorites of your friends and of the public.'
+                    text: 'Tired of outdated rankings? Find just the best that the world has to offer from the favorites of your friends and of the public.',
+                    title: 'Explore'
                 },
                 {
                     image: require('./tiles/master.png'),
-                    text: 'Curious what the world’s veteran travelers recommend? Find the best cities, bars, restaurants and more from experts who have travelled the globe.'
+                    text: 'Curious what the world’s veteran travelers recommend? Find the best cities, bars, restaurants and more from experts who have travelled the globe.',
+                    title: 'Master'
                 }
             ]
         };
@@ -49,9 +52,11 @@ export class Onboarding extends Component {
         return (<View style={styles.container}>
             <View style={styles.onboardingContainer}>
                 <OnboardingTile
+                style={styles.tile}
                 tile={this.getActiveSlide()}
                 />
                 <Button
+                buttonStyle={styles.button}
                 raised
                 backgroundColor='#3c95cd'
                 icon={{ name: 'chevron-right', type: 'font-awesome' }}
@@ -64,10 +69,17 @@ export class Onboarding extends Component {
 }
 
 const styles = StyleSheet.create({
+    button: {
+      marginBottom: 15
+    },
     container: {
-        flex: 1
+        flex: 1,
+        flexDirection: 'column'
     },
     onboardingContainer: {
         flex: 1
+    },
+    tile: {
+      flex: 2
     }
 });
