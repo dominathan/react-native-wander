@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Icon, CheckBox } from 'react-native-elements';
+import { Icon, CheckBox, Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import { addFriend, acceptFriend, declineFriend } from '../../services/apiActions';
@@ -87,10 +87,14 @@ export class FriendDetail extends Component {
           {
             friend.search &&
             <View style={styles.addFriend}>
-              <Icon
-              name='add'
-              color='#4296CC'
-              onPress={() => this.addFriendToDatabase(friend)} />
+              <Button
+                buttonStyle={styles.acceptJoinGroupRequestButton}
+                title="Add"
+                icon={{name: 'add', color: '#4296CC'}}
+                backgroundColor='#FFF'
+                color='#4296CC'
+                borderRadius={1}
+              />
             </View>
           }
 
@@ -123,8 +127,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 7,
     marginBottom: 5,
-    alignItems: 'stretch',
-    justifyContent: 'space-between'
   },
   photo: {
     height: 40,
@@ -132,7 +134,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   textContainer: {
-    flex: 1,
     marginLeft: 5,
     marginTop: 10,
     flexDirection: 'row',
@@ -148,13 +149,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch'
   },
-  addFriend: {
-    position: 'relative',
-    bottom: 0,
-    left: 150,
-  },
   acceptFriend: {
     alignItems: 'flex-end',
     flexDirection: 'row',
-  }
+  },
+  acceptJoinGroupRequestButton: {
+    borderWidth: 1,
+    borderColor: '#4296CC',
+    alignSelf: 'flex-end'
+  },
+  acceptJoinPlus: {
+    color: '#4296CC',
+    backgroundColor: '#4296CC'
+  },
 });

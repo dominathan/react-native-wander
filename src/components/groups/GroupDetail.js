@@ -47,24 +47,28 @@ export class GroupDetail extends Component {
           </TouchableOpacity>
 
 
-          <TouchableOpacity>
+          <TouchableOpacity style={styles.moveButtonsRight}>
 
           {
             group.publicGroup && <Button
+              buttonStyle={styles.acceptJoinGroupRequestButton}
               title="JOIN"
-              icon={{name: 'add'}}
-              backgroundColor='#4296CC'
-              color='#FFF'
+              icon={{name: 'add', color: '#4296CC'}}
+              backgroundColor='#FFF'
+              color='#4296CC'
+              borderRadius={1}
               onPress={() => this.joinGroup(group)}
             />
           }
 
           {
             group.privateGroup && <Button
+              buttonStyle={styles.acceptJoinGroupRequestButton}
               title="REQUEST"
-              icon={{name: 'plus-one'}}
-              backgroundColor='#4296CC'
-              color='#FFF'
+              icon={{name: 'add', color: '#4296CC'}}
+              backgroundColor='#FFF'
+              color='#4296CC'
+              borderRadius={1}
             />
           }
 
@@ -103,5 +107,17 @@ const styles = StyleSheet.create({
     color: '#8D8F90',
     fontSize: 12,
     paddingLeft: 10
+  },
+  acceptJoinGroupRequestButton: {
+    borderWidth: 1,
+    borderColor: '#4296CC',
+    alignSelf: 'flex-end'
+  },
+  acceptJoinPlus: {
+    color: '#4296CC',
+    backgroundColor: '#4296CC'
+  },
+  moveButtonsRight: {
+    flex: 1
   }
 });

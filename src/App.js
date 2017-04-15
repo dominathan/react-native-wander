@@ -11,7 +11,7 @@ import { GooglePlaces } from './components/places/GooglePlaces';
 import { MyPlaces } from './components/places/MyPlaces';
 
 import { Login } from './components/Login';
-import { Onboarding } from './components/onboarding';
+import { Onboarding } from './components/onboarding/Onboarding';
 import { Friends } from './components/friends/Friends';
 import { Notifications } from './components/notifications/Notifications';
 import { Settings } from './components/Settings';
