@@ -17,7 +17,7 @@ export class Help extends Component {
           backgroundColor='#3c95cd'
           icon={{ name: 'envelope', type: 'font-awesome' }}
           title="Contact Us"
-          onPress={this.contact()}
+          onPress={() => {this.contact() }}
         />
         <Button
           buttonStyle={styles.button}
