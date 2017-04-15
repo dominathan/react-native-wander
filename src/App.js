@@ -1,7 +1,8 @@
 // 1. Import library to help create a comment.
 import React, { Component } from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import { AsyncStorage, StatusBar } from 'react-native';
+import { AsyncStorage, Image, StatusBar, TouchableHighlight } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { Home } from './components/Home';
 import SimpleDrawer from './SimpleDrawer';
@@ -17,6 +18,7 @@ import { Notifications } from './components/notifications/Notifications';
 import { Settings } from './components/Settings';
 import { Help } from './components/Help';
 import { Profile } from './components/profile/Profile';
+import { ProfileInfo } from './components/profile/ProfileInfo';
 
 // Groups
 import { Group } from './components/groups/Group';
@@ -33,18 +35,29 @@ class App extends Component {
     super(props);
     StatusBar.setBarStyle('light-content');
     this.state = {
-      isLoggedIn: undefined
+      isLoggedIn: undefined,
+      backButton: undefined,
+      drawerButton: undefined
     };
   }
 
   componentWillMount() {
-    AsyncStorage.getItem('token').then(token => {
-      if (token) {
-        this.setState({ isLoggedIn: true });
-      } else {
-        this.setState({ isLoggedIn: false });
-      }
-    });
+    Icon.getImageSource('chevron-left', 20, '#fff')
+      .then(source => {
+        this.setState({ backButton: source })
+        return Icon.getImageSource('bars', 20, '#fff');
+      })
+      .then(source => {
+        this.setState({ drawerButton: source })
+        return AsyncStorage.getItem('token');
+      })
+      .then(token => {
+        if (token) {
+          this.setState({ isLoggedIn: true });
+        } else {
+          this.setState({ isLoggedIn: false });
+        }
+      });
     this.handleAddFriends = this.handleAddFriends.bind(this);
     this.setIsLoggedIn = this.setIsLoggedIn.bind(this);
     this.getIsLoggedIn = this.getIsLoggedIn.bind(this);
@@ -62,13 +75,19 @@ class App extends Component {
     Actions.addFriends({ group: state.group });
   }
 
+  drawerButton = () => (
+    <TouchableHighlight onPress={() => { Actions.refresh({ key: 'drawer', open: true }); }}>
+      <Image resizeMode="contain" source={this.state.drawerButton}/>
+    </TouchableHighlight>
+  );
+
   render() {
       if (this.state.isLoggedIn === undefined) {
         return (null);
       } else {
         return (
-          <Router navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
-            <Scene key='drawer' component={SimpleDrawer} >
+          <Router backButtonImage={this.state.backButton} navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
+            <Scene key='drawer' renderLeftButton={this.drawerButton} type="replace" component={SimpleDrawer} >
               <Scene key='main' tabs={false}>
                 <Scene key='launch' >
                   <Scene key='login' component={Login} title="Login" hideNavBar initial />
@@ -87,6 +106,7 @@ class App extends Component {
                 <Scene key='groupProfile' component={GroupProfile} title="Group" onRight={(state) => this.handleAddFriends(state)} rightTitle="+ Friend" />
                 <Scene key='addFriends' component={AddFriends} title='Add to Group' />
                 <Scene key='onboarding' component={Onboarding} title='Onboarding' hideNavBar />
+                <Scene key='profileInfo' component={ProfileInfo} title='Profile Info' />
               </Scene>
             </Scene>
           </Router>

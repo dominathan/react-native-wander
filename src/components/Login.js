@@ -46,6 +46,9 @@ export class Login extends Component {
       .then(res => {
         AsyncStorage.setItem('user', JSON.stringify(res));
         this.props.setIsLoggedIn(true);
+        if (res.first_time) {
+          return Actions.onboarding({ type: 'reset'});
+        }
         Actions.home({ type: 'reset' });
       })
       .catch((err) => {

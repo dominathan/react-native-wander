@@ -77,7 +77,6 @@ export class Profile extends Component {
           favorites: data.favorites,
           favoritesList: list
         });
-        console.log(data.favorites);
       })
       .then(() => {
         this.getCountriesVisited();

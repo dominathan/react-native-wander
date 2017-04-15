@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { email } from 'react-native-communications';
-import { Actions, ActionConsts } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 
 export class Help extends Component {
   contact() {
@@ -17,7 +17,7 @@ export class Help extends Component {
           backgroundColor='#3c95cd'
           icon={{ name: 'envelope', type: 'font-awesome' }}
           title="Contact Us"
-          onPress={this.contact()}
+          onPress={() => {this.contact() }}
         />
         <Button
           buttonStyle={styles.button}

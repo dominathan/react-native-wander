@@ -1,21 +1,72 @@
 import React, { Component } from 'react';
-import { ListView, Text } from 'react-native';
+import { Alert, AsyncStorage, StyleSheet, View } from 'react-native';
+import { List, ListItem } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 
 export class Settings extends Component {
   constructor() {
     super();
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
-    };
+      settings: [
+        {
+          title: "Profile Info",
+          icon: {name: 'user-circle-o', type: 'font-awesome'},
+          onPress: () => {
+            Actions.profileInfo();
+          }
+        },
+        {
+          title: 'Logout',
+          icon: {name: 'cloud', type: 'font-awesome'},
+          onPress: () => {
+            Alert.alert(
+              'Logout',
+              'Are you sure you want to log out?',
+              [
+                {
+                  text: 'Cancel',
+                  onPress: () => { return }
+                },
+                {
+                  text: 'Ok',
+                  onPress: () => {
+                    AsyncStorage.removeItem('token', () => {
+                      this.props.setIsLoggedIn(false);
+                      Actions.launch({type: 'reset'});
+                    });
+                  }
+                }
+              ]
+            );
+          }
+        }
+      ]
+    }
   }
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(rowData) => <Text>{rowData}</Text>}
-      />
+      <View style={styles.container}>
+        <List>
+          {
+            this.state.settings.map((item, i) => (
+              <ListItem
+                key={i}
+                title={item.title}
+                leftIcon={item.icon}
+                onPress={item.onPress}
+              />
+            ))
+          }
+        </List>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 45
+  }
+});

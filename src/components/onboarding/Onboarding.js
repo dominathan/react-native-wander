@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { AsyncStorage, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { OnboardingTile } from './OnboardingTile';
 import { Actions } from 'react-native-router-flux';
@@ -9,6 +9,7 @@ export class Onboarding extends Component {
         super(props);
         this.state = {
             activeSlide: 0,
+            isFirstTime: undefined,
             slides: [
                 {
                     image: require('./tiles/discover.png'),
@@ -27,6 +28,14 @@ export class Onboarding extends Component {
                 }
             ]
         };
+        this.setFirstTime();
+    }
+
+    setFirstTime() {
+      AsyncStorage.getItem('user', (err, user) => {
+        let first_time = JSON.parse(user).first_time;
+        this.setState({ isFirstTime: first_time });
+      });
     }
 
     getActiveSlide() {
@@ -41,6 +50,9 @@ export class Onboarding extends Component {
     advanceSlide() {
         if ((this.state.activeSlide + 1) === this.state.slides.length) {
           this.setState({activeSlide: 0});
+          if (this.state.isFirstTime) {
+            return Actions.home({ type: 'reset'});
+          }
           Actions.help({ type: 'reset' });
         } else {
           let newActiveSlide = ++this.state.activeSlide;
@@ -52,16 +64,16 @@ export class Onboarding extends Component {
         return (<View style={styles.container}>
             <View style={styles.onboardingContainer}>
                 <OnboardingTile
-                style={styles.tile}
-                tile={this.getActiveSlide()}
+                  style={styles.tile}
+                  tile={this.getActiveSlide()}
                 />
                 <Button
-                buttonStyle={styles.button}
-                raised
-                backgroundColor='#3c95cd'
-                icon={{ name: 'chevron-right', type: 'font-awesome' }}
-                title="Next"
-                onPress={() => { this.advanceSlide() }}
+                  buttonStyle={styles.button}
+                  raised
+                  backgroundColor='#3c95cd'
+                  icon={{ name: 'chevron-right', type: 'font-awesome' }}
+                  title="Next"
+                  onPress={() => { this.advanceSlide() }}
                 />
             </View>
         </View>);

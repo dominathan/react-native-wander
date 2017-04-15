@@ -6,11 +6,11 @@ export class OnboardingTile extends Component {
     render() {
         return (
             <Tile
-            imageSrc={this.props.tile.image}
-            title={this.props.tile.title}
-            containerStyle={styles.container}
-            contentContainerStyle={styles.textContainer}
-            imageContainerStyle={styles.imageContainer}
+              imageSrc={this.props.tile.image}
+              title={this.props.tile.title}
+              containerStyle={styles.container}
+              contentContainerStyle={styles.textContainer}
+              imageContainerStyle={styles.imageContainer}
             >
               <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text>{this.props.tile.text}</Text>
