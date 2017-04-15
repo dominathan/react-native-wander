@@ -1,40 +1,24 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import { getFriends, getRequestedFriends } from '../../services/apiActions';
-import Button from '../Button';
+export default class FriendsButtons extends Component{
+  constructor() {
+    super()
+    this.state = {
+      selectedTab: 'profile',
+    }
+  }
 
-const loadFriends = () => {
+  changeTab (selectedTab) {
+    this.setState({selectedTab})
+  }
 
-};
+  render() {
 
-const getRequestedFriendsList = () => {
-  getRequestedFriends()
-    .then((data) => {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(data),
-        searching: false,
-        pendingFriend: true
-      });
-    })
-    .catch(err => console.error('NO SEARACH', err));
-};
-
-const FriendsButtons = (props) => {
-  const { getRequestedFriendsList, getFriends } = props;
-  return (
-    <View style={styles.friendButtons}>
-      <Button onPress={() => getFriends()}>
-        Friends
-      </Button>
-      <Button onPress={() => console.log('bleh')}>
-        Find friends
-      </Button>
-      <Button onPress={() => getRequestedFriendsList()}>
-        Pending Requests
-      </Button>
-    </View>
-  );
+    return (
+      <View></View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -44,5 +28,3 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end'
   },
 });
-
-export default FriendsButtons;

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { ListView, View, Text, Image, StyleSheet } from 'react-native';
+import { ListView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { List, ListItem } from 'react-native-elements';
+
 
 export class Feed extends Component {
 
@@ -10,24 +12,40 @@ export class Feed extends Component {
       feed: ds.cloneWithRows(props.feed)
     };
     this.renderFeed = this.renderFeed.bind(this);
+    this.handleLike = this.handleLike.bind(this);
+    this.handleBeenThere = this.handleBeenThere.bind(this);
   }
 
   renderFeed(feed) {
     return (
-      <View style={styles.container}>
-        <Image source={{ uri: feed.user.photo_url }} style={styles.photo} />
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>
-            <Text style={styles.bold}>{`${feed.user.first_name} ${feed.user.last_name}`}</Text>
-              {` added `}
-            <Text style={styles.bold}>{`${feed.place.name}`}</Text>
-          </Text>
-          <Text style={styles.textComment}>
-            {feed.comment}
-          </Text>
-        </View>
-      </View>
+      <ListItem
+       roundAvatar
+       title={`${feed.user.first_name} added ${feed.place.name}`}
+       titleStyle={styles.titleStyle}
+       subtitle={
+         <View style={styles.subtitleView}>
+           <Text style={styles.textComment}>
+             {feed.comment}
+           </Text>
+           <View style={styles.likeAndBeen}>
+             <TouchableOpacity onPress={() => this.handleLike(feed.place)}><Text style={styles.likeButton}>Like</Text></TouchableOpacity>
+             <TouchableOpacity onPress={() => this.handleBeenThere(feed.place)}><Text style={styles.beenButton}>Been there</Text></TouchableOpacity>
+           </View>
+         </View>
+       }
+       hideChevron={true}
+       avatar={{uri: feed.user.photo_url}}
+       avatarStyle={styles.avatarStyle}
+     />
     );
+  }
+
+  handleLike() {
+
+  }
+
+  handleBeenThere() {
+    
   }
 
   render() {
@@ -74,8 +92,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E8E8E',
   },
   textComment: {
-    marginLeft: 14,
     fontWeight: '100',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    paddingLeft: 10
+  },
+  likeAndBeen: {
+    paddingLeft: 10,
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
+    marginTop: 10
+  },
+  likeButton: {
+    color: 'gray'
+  },
+  beenButton: {
+    color: 'gray',
+    marginLeft: 45
+  },
+  titleStyle: {
+    fontWeight: '600',
+    fontFamily: 'Helvetica'
+  },
+  avatarStyle: {
+    width: 45,
+    height: 45,
+    borderRadius: 20
   }
+
 });

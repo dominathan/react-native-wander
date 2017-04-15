@@ -2,28 +2,40 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { email } from 'react-native-communications';
+import { Actions, ActionConsts } from 'react-native-router-flux';
 
 export class Help extends Component {
   contact() {
-    email('help@rayka-app.com', null, null, null, null);
+    email('landon@rayka-app.com', null, null, null, null);
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Button 
+        <Button
           raised
           backgroundColor='#3c95cd'
           icon={{ name: 'envelope', type: 'font-awesome' }}
-          title="Contact Us" 
-          onPress={this.contact()} 
+          title="Contact Us"
+          onPress={this.contact()}
+        />
+        <Button
+          buttonStyle={styles.button}
+          raised
+          backgroundColor='#3c95cd'
+          icon={{ name: 'arrows', type: 'font-awesome' }}
+          title="Onboarding"
+          onPress={() => { Actions.onboarding() }}
         />
       </View>
     );
   }
-};
+}
 
 const styles = StyleSheet.create({
+  button: {
+    marginTop: 15
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
