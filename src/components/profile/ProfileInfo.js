@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { AsyncStorage, StyleSheet, View } from 'react-native';
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { Alert, AsyncStorage, StyleSheet, View } from 'react-native';
+import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
+import { updateUser } from '../../services/apiActions';
 
 export class ProfileInfo extends Component {
   constructor(props) {
@@ -11,12 +13,38 @@ export class ProfileInfo extends Component {
     this.setCurrentUser();
   }
 
-  // users/:id PUT route
-
   setCurrentUser() {
     AsyncStorage.getItem('user', (err, user) => {
       this.setState({user: JSON.parse(user).user });
     });
+  }
+
+  submit() {
+    Alert.alert(
+      'Update user settings',
+      'Are you sure you want to update?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => { return }
+        },
+        {
+          text: 'Ok',
+          onPress: () => {
+            updateUser(this.state.user)
+              .then(() => {
+                return AsyncStorage.setItem('user', JSON.stringify(this.state.user));
+              })
+              .then(() => {
+                Actions.settings({type: 'reset'});
+              })
+              .catch(error => {
+                console.log('FUCK: ', error);
+              });
+          }
+        }
+      ]
+    );
   }
 
   render() {
@@ -32,7 +60,6 @@ export class ProfileInfo extends Component {
               onChangeText={(text) => {
                 user.first_name = text;
                 this.setState({ user: user })
-                console.log('state', this.state.user)
               }}
               value={user.first_name} />
             <FormLabel>Last Name</FormLabel>
@@ -54,6 +81,14 @@ export class ProfileInfo extends Component {
               />
             </View>
           }
+          <Button
+            buttonStyle={styles.button}
+            raised
+            backgroundColor='#3c95cd'
+            icon={{ name: 'check', type: 'font-awesome' }}
+            title="Submit"
+            onPress={() => { this.submit() }}
+          />
         </View>
       );
     }
@@ -61,9 +96,12 @@ export class ProfileInfo extends Component {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    marginTop: 15
+  },
   container: {
     flex: 1,
-    marginTop: 50
+    marginTop: 60
   },
   fieldView: {
     height: 40

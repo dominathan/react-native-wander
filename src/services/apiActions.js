@@ -32,6 +32,27 @@ const defaultPost = (subUrl, data) => {
  });
 };
 
+const defaultPut = (subUrl, data) => {
+  return new Promise((resolve, reject) => {
+    AsyncStorage.getItem('token', (err, token) => {
+     if (err) {
+       console.log(' NO TOKEN: ', err);
+       Actions.login();
+       return
+     }
+     const parsedToken = JSON.parse(token);
+     fetch(`${API_BASE}/${subUrl}`, {
+       method: 'PUT',
+       headers: headers(parsedToken),
+       body: JSON.stringify(data)
+     })
+     .then((response) => response.json())
+     .then((apiData) => resolve(apiData))
+     .catch((apiErr) => reject(apiErr));
+   });
+ });
+};
+
 const defaultGet = (subUrl, params) => {
   return new Promise((resolve, reject) => {
     AsyncStorage.getItem('token', (err, token) => {
@@ -85,6 +106,7 @@ const getGroupPlaces =  (query) => defaultGet('groups/places', query);
 const addFriendsToGroup = (friendsAndGroup) => defaultPost('groups/friends', friendsAndGroup);
 const getNotifications = () => defaultGet('notifications');
 const acceptJoinGroupRequest = (friendAndGroup) => defaultPost('groups/accept', friendAndGroup);
+const updateUser = (user) => defaultPut(`users/${user.id}`, user);
 
 export {
   addPlaceToFavorite,
@@ -113,5 +135,6 @@ export {
   getGroupPlaces,
   addFriendsToGroup,
   getNotifications,
-  acceptJoinGroupRequest
+  acceptJoinGroupRequest,
+  updateUser
 };
