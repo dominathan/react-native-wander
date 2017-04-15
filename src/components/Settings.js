@@ -30,10 +30,14 @@ export class Settings extends Component {
                 {
                   text: 'Ok',
                   onPress: () => {
-                    AsyncStorage.removeItem('token', () => {
-                      this.props.setIsLoggedIn(false);
-                      Actions.launch({type: 'reset'});
-                    });
+                    AsyncStorage.removeItem('token')
+                      .then(() => {
+                        return AsyncStorage.removeItem('user');
+                      })
+                      .then(() => {
+                          this.props.setIsLoggedIn(false);
+                          Actions.launch({type: 'reset'});
+                      });
                   }
                 }
               ]

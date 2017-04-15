@@ -87,7 +87,7 @@ class App extends Component {
       } else {
         return (
           <Router backButtonImage={this.state.backButton} navigationBarStyle={{ backgroundColor: '#3c95cd' }} titleStyle={{ color: '#FFF' }} getIsLoggedIn={this.getIsLoggedIn} setIsLoggedIn={this.setIsLoggedIn}>
-            <Scene key='drawer' renderLeftButton={this.drawerButton} type="replace" component={SimpleDrawer} >
+            <Scene key='drawer' renderLeftButton={this.drawerButton} type="replace" component={SimpleDrawer}>
               <Scene key='main' tabs={false}>
                 <Scene key='launch' >
                   <Scene key='login' component={Login} title="Login" hideNavBar initial />
