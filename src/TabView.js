@@ -61,37 +61,37 @@ const TabView = (props, context) => {
   const drawer = context.drawer;
   const routes = ds.cloneWithRows([
     {
-      routeCallback: () => { drawer.close(); Actions.home(); },
+      routeCallback: () => { drawer.close(); Actions.home({ type: 'reset' }); },
       name: 'Home',
       icon: 'home'
     },
     {
-      routeCallback: () => { drawer.close(); Actions.friends(); },
+      routeCallback: () => { drawer.close(); Actions.friends({ type: 'reset' }); },
       name: 'Friends',
       icon: 'gears'
     },
     {
-      routeCallback: () => { drawer.close(); Actions.myPlaces(); },
+      routeCallback: () => { drawer.close(); Actions.myPlaces({ type: 'reset' }); },
       name: 'My Places',
       icon: 'map'
     },
     {
-      routeCallback: () => { drawer.close(); Actions.groups(); },
+      routeCallback: () => { drawer.close(); Actions.groups({ type: 'reset' }); },
       name: 'Groups',
       icon: 'gears'
     },
     {
-      routeCallback: () => { drawer.close(); Actions.notifications(); },
+      routeCallback: () => { drawer.close(); Actions.notifications({ type: 'reset' }); },
       name: 'Notifications',
       icon: 'bell'
     },
     {
-      routeCallback: () => { drawer.close(); Actions.help(); },
+      routeCallback: () => { drawer.close(); Actions.help({ type: 'reset' }); },
       name: 'Get Help',
       icon: 'question-circle'
     },
     {
-      routeCallback: () => { drawer.close(); Actions.settings(); },
+      routeCallback: () => { drawer.close(); Actions.settings({ type: 'reset' }); },
       name: 'Settings',
       icon: 'cogs'
     }
